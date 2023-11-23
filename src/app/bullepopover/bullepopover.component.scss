@@ -1,0 +1,22 @@
+  .item{
+    --background-activated: dimgray; // Couleur de fond lorsqu'il est activé/cliqué
+    --background-focused: dimgray; // Couleur de fond lorsqu'il est focalisé
+  }
+  ion-item {
+    --background: rgb(200, 200, 200); // Couleur de fond des éléments
+    --color: #000000; // Couleur du texte
+    --padding-start: 16px; // Espace intérieur gauche
+    --padding-end: 0px; // Espace intérieur droit
+    --border-radius: 0; // Rayon des coins
+    // Plus de styles personnalisés ici
+  }
+  
+  ion-label {
+    font-size: 12px; // Taille de la police
+    // Plus de styles personnalisés ici
+  }
+
+  i{
+    font-size: 1.2em;
+    margin-right: 10px;
+  }

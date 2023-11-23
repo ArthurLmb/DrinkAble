@@ -1,0 +1,38 @@
+
+//Liste contact
+.header-list{
+  display: flex;
+  justify-content: center;
+}
+.label-trier{
+  margin-left: 6px;
+  color: grey;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+img {
+  width: 50px; /* Ajustez la largeur */
+  height: auto; /* Gardez le ratio hauteur/largeur */
+  border-radius: 50%;
+}
+.etat-rond {
+  width: 15px; // Taille du rond
+  height: 15px; // Hauteur du rond
+  border-radius: 50%; // Rend le div rond
+  margin-right: 20px; // Espace à droite du rond
+  // Ajoute d'autres styles si nécessaire
+}
+
+.footer {
+    ion-toolbar {
+      ion-row {
+        height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+  
+        ion-col {
+          display: flex;
+          justify-content: center; // Centre horizontalement dans la colonne
+          align-items: center; // Centre verticalement dans la colonne
+        }
+      }
+    }
+  }

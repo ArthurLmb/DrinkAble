@@ -1,0 +1,32 @@
+<ion-list>
+  <ion-item button (click)="toggleFavoris()" class="item">
+    <ion-label>
+      <i [ngClass]="contact.favoris ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+      {{ estFavori ? 'Retirer' : 'Ajouter' }}
+    </ion-label>
+  </ion-item>
+  <ion-item button (click)="appelerContact()" class="item">
+    <ion-label>
+      <i class="bi bi-telephone-fill"></i>
+      Appeler
+    </ion-label>
+  </ion-item>
+  <ion-item button (click)="messageContact()" class="item">
+    <ion-label>
+      <i class="bi bi-chat-right-text-fill"></i>
+      SMS
+    </ion-label>
+  </ion-item>
+  <ion-item *ngIf="contact.localisation" button (click)="ouvrirOptionsCartographie()" class="">
+    <ion-label>
+      <i class="bi bi-pin-map-fill"></i>
+      Adresse
+    </ion-label>
+  </ion-item>
+  <ion-item button (click)="supprimerContact()" class="item-supprimer">
+    <ion-label>
+      <i class="bi bi-person-x-fill"></i>
+      Supprimer
+    </ion-label>
+  </ion-item>
+</ion-list>

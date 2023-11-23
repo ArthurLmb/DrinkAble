@@ -1,0 +1,184 @@
+<ion-header>
+  <ion-toolbar>
+  <ion-title>Drink'Able</ion-title>
+  <ion-label slot="start" id="open-filter-popover" style="display: flex; align-items: center; margin-left: 10px;">
+    {{ currentFilter === 'all' ? 'Contacts' : 'Favoris' }}
+    <ion-icon id="open-filter-popover" name="chevron-down-outline" style="font-size: 30px; margin-left: 6px;"></ion-icon>
+  </ion-label>
+  <ion-icon slot="end" name="people-circle-outline"
+    style="font-size: 34px; margin-right: 12px;"
+    (click)="openContactPage()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-popover id="filter-popover" trigger="open-filter-popover" class="popover-filtre"
+style="margin-top: 10px;">
+  <ng-template>
+    <ion-content class="inverse-theme">
+      <ion-list>
+        <ion-item button detail="false" lines="full" (click)="applyFilter('all')">Contacts
+          <i style="margin-left: 10px; font-size: 20px;" class="bi bi-people fw-bold"></i></ion-item>
+        <ion-item button detail="false" lines="full" (click)="applyFilter('favorites')">Favoris
+          <i style="margin-left: 26px; font-size: 20px;" class="bi bi-star fw-bold"></i></ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+
+<ion-content>
+  <div class="horizontal-scroll">
+    <div id="open-profil-modal" class="contact-bubble">
+      <div class="photo-container"
+      style="border-color: transparent;">
+        <img [src]="monprofil?.photoURL">
+      </div>
+      <div class="profil-info">
+        <p class="votreprofil">Votre profil</p>
+        <p *ngIf="monprofil?.localisation; else noLocation" class="malocalisation">
+          {{ monprofil?.localisation }} 
+          <i class="bi bi-pen-fill" style="margin-left: 2px;"></i></p>
+        <ng-template #noLocation>
+          <p style="color: grey;" class="malocalisation">
+            En sortie ?
+          <i class="bi bi-pen-fill" style="margin-left: 2px;"></i></p>
+        </ng-template>
+      </div>
+    </div>
+    <div class="contact-bubble" *ngFor="let contact of contacts">
+      <div class="photo-container" (click)="presentPopover($event, contact)"
+      [ngStyle]="{'border-color': getBorderColor(contact.etat)}">
+        <img [src]="contact.photoURL">
+      </div>
+      <div class="contact-info">
+        <p class="name">{{ contact.prenom }}</p>
+        <p class="localisation">{{ contact.localisation }}</p>
+      </div>
+    </div>
+  </div>
+
+  <ion-modal id="profil-modal" trigger="open-profil-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5]">
+    <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Modifier votre profil</ion-title>
+              <i slot="end" class="bi bi-x-circle-fill" (click)="dismissModal()"
+              style="font-size: 26px; margin-right: 8px; color: grey;"></i>
+          </ion-toolbar>
+        </ion-header>
+        <div class="edit-toolbar-container">
+        <ion-toolbar class="edit-loca">
+          <div slot="start" class="photo-container" style="margin: 5px;"
+          [ngStyle]="{'border-color': getBorderColor(monprofil.etat)}">
+            <img [src]="monprofil?.photoURL">
+          </div>
+          <div slot="start" style="margin-right: 4px;">
+            <i class="bi bi-geo-alt-fill" style="font-size: 26px; color: grey;"></i>
+          </div>
+          <div slot="start" class="location-input">
+            <ion-input type="text" [(ngModel)]="newLocalisation" [placeholder]="newLocalisation ? null : 'Indiquez où vous sortez'"></ion-input>
+        </div>
+        </ion-toolbar>
+          <p class="modif-photo"><i class="bi bi-images" style="margin-right: 20px;"></i>Choisir dans la bibliothèque</p>
+          <p class="modif-photo"><i class="bi bi-camera" style="margin-right: 20px;"></i>Prendre une Photo</p>
+          <p class="supp-photo"><i class="bi bi-trash3" style="margin-right: 20px;"></i>Supprimer la photo</p>
+          <ion-button color="success" class="confirm-button" (click)="onUpdateLocalisation()">Confirmer</ion-button>
+        </div>
+    </ng-template>
+  </ion-modal>
+
+  
+  <div class="modals divers">
+  <ion-modal id="vtc-modal" trigger="open-vtc-modal" [initialBreakpoint]="0.3" [breakpoints]="[0, 0.3]">
+    <ng-template>
+      <ion-content>
+        <p class="modal-title">Redirection VTC</p>
+        <ion-grid>
+          <ion-row class="detail-modal">
+            <ion-col size="auto">
+              <a href="uber://" target="_blank">
+                <img src="assets/perso/vtc/uber.png" alt="ouvrir uber"></a>
+                <ion-label>Uber</ion-label>
+            </ion-col>
+            <ion-col size="auto">
+              <a href="https://apps.apple.com/app/id675033630" target="_blank">
+                <img src="assets/perso/vtc/bolt.png" alt="ouvrir bolt"></a>
+                <ion-label>Bolt</ion-label>
+            </ion-col>
+            <ion-col size="auto">
+              <a href="https://apps.apple.com/be/app/id693137280" target="_blank">
+                <img src="assets/perso/vtc/heetch.png" alt="ouvrir heetch"></a>
+                <ion-label>Heetch</ion-label>
+            </ion-col>
+            <ion-col size="auto">
+              <a href="https://apps.apple.com/be/app/id1455851406" target="_blank">
+                <img src="assets/perso/vtc/taxivert.png" alt="ouvrir taxivert"></a>
+                <ion-label>TaxiVert</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal id="urgence-modal" trigger="open-urgence-modal" [initialBreakpoint]="0.3" [breakpoints]="[0, 0.3]">
+    <ng-template>
+      <ion-content>
+        <p class="modal-title">Numéros d'urgence</p>
+        <ion-grid>
+          <ion-row class="detail-modal">
+            <ion-col size="auto" >
+              <a href="tel:112">
+                <img src="assets/perso/urgences/112.png" alt="appel 112"></a>
+                <ion-label>Urgences</ion-label>
+            </ion-col>
+            <ion-col size="auto">
+              <a href="tel:101">
+                <img src="assets/perso/urgences/police.png" alt="appel police" style="background-color: #1e4ba8"></a>
+                <ion-label>Police</ion-label>
+              </ion-col>
+            <ion-col size="auto">
+              <a href="tel:0491894174">
+                <img src="assets/perso/urgences/plus.png" alt="plus"></a>
+                <ion-label>Ajouter</ion-label>
+            </ion-col>
+            <ion-col size="auto">
+              <a href="">
+                <img src="assets/perso/urgences/plus.png" alt="plus"></a>
+                <ion-label>Ajouter</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  </div>
+</ion-content>
+
+<ion-footer class="footer">
+  <ion-toolbar class="toolbar-boutons-modal">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="auto" class="modal-oppener" style="font-size: 2.5em;">
+          <i id="open-vtc-modal" class="bi bi-taxi-front" style="color: goldenrod;"></i>
+        </ion-col>  
+        <ion-col size="auto" class="modal-oppener" style="font-size: 2.5em;">
+          <i id="open-urgence-modal" class="bi bi-telephone-plus" style="color: red;"></i>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 3em" size="4" text-center>
+        <ion-icon name="beer-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="game-controller-outline" 
+        (click)="openGamificationPage()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

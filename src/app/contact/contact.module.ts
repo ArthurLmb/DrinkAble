@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { ContactPageRoutingModule } from './contact-routing.module';
+
+import { ContactPage } from './contact.page';
+import { ContactPopoverComponent } from '../contact-popover/contact-popover.component';
+
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ContactPageRoutingModule
+  ],
+  declarations: [ContactPage]
+})
+export class ContactPageModule {}
+
+@NgModule({
+  declarations: [ContactPopoverComponent],
+  imports: [
+    CommonModule,
+    IonicModule // Assure-toi que ceci est inclus
+  ]
+})
+export class ContactModule { }

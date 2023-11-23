@@ -1,0 +1,167 @@
+ion-content{
+  --overflow: hidden;
+}
+
+//popover filtre
+/* Si le système est en mode sombre, appliquer un style clair */
+@media (prefers-color-scheme: dark) {
+  ion-content.inverse-theme, .inverse-theme ion-list, .inverse-theme ion-item {
+    --background: white;
+    color: black;
+  }
+}
+@media (prefers-color-scheme: light) {
+  ion-content.inverse-theme, .inverse-theme ion-list, .inverse-theme ion-item {
+    --background: black;
+    color: white;
+  }
+}
+.popover-filtre{
+  --width: 138px;
+}
+.popover-filtre::part(arrow) {
+  display: none;
+}
+
+//modal modifier profile
+.edit-toolbar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Pour que les enfants s'étendent sur toute la largeur */
+  height: 100%;
+}
+.edit-loca {
+}
+.location-input ion-input {
+  --padding-start: 8px; /* Ajustez le padding intérieur */
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --background: grey; /* Ajustez la couleur de fond */
+}
+.modif-photo, .supp-photo {
+  font-size: 1.3em;
+  margin-left: 20px;
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+.supp-photo {
+  color: red;
+}
+.confirm-button {
+  margin-top: 10px;
+  margin-right: 20px;
+  align-self: flex-end;
+}
+
+//barre de bulles
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 5px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+//bulles contact & profile
+.contact-bubble {
+  display: inline-flex; /* Utiliser flexbox pour un meilleur alignement */
+  flex-direction: column; /* Aligner verticalement */
+  align-items: center; /* Centrer horizontalement */
+  width: 80px; /* Ajustez selon vos besoins */
+  margin: 10px;
+  text-align: center;
+}
+
+//photo container contacts & profil
+.photo-container {
+  width: 90px; /* Taille de la photo */
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid; /* Épaisseur de la bordure */
+  overflow: hidden;
+  margin-bottom: 0px;
+  background-color: transparent;
+}
+.photo-container img {
+  margin: 2px; /* Ajoute l'espace entre l'image et le bord */
+  width: calc(100% - 4px); /* Réduit la taille de l'image pour compenser le margin */
+  height: calc(100% - 4px); /* Idem pour la hauteur */
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+//mon profil labels
+.profil-info .votreprofil {
+  font-size: 16px; /* Taille du texte */
+  color: gray;
+  margin-top: 0px;
+  margin-bottom: 2px;
+}
+.profil-info .malocalisation {
+  font-size: 14px; /* Taille du texte */
+  margin-top: 1px;
+  margin-bottom: 0px;
+}
+
+//contact labels
+.contact-info .name {
+  font-size: 16px; /* Taille du texte */
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+.contact-info .localisation {
+  font-size: 12px; /* Taille du texte */
+  margin-top: 1px;
+  margin-bottom: 0px;
+}
+
+//Boutons des modals
+.modal-oppener {
+  display: flex;
+  justify-content: center; /* Centrage horizontal */
+  align-items: center; /* Centrage vertical */
+  padding: 0px 40px; /* Ajoute 10px de marge horizontale autour de chaque bouton */
+}
+
+//Détail modal vtc
+.modal-title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.5em;
+  margin-bottom: 14px;
+}
+.detail-modal {
+  justify-content: center;
+  gap: 6px;
+}
+.detail-modal ion-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.detail-modal img {
+  width: 75px; /* Ajustez la largeur */
+  height: auto; /* Gardez le ratio hauteur/largeur */
+  border-radius: 20%;
+}
+.detail-modal ion-label {
+  margin-top: 4px; /* Ajustez l'espace au-dessus de l'étiquette */
+  font-size: 16px;
+}
+
+//Footer
+.footer {
+  ion-toolbar {
+    ion-row {
+      height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+
+      ion-col {
+        display: flex;
+        justify-content: center; // Centre horizontalement dans la colonne
+        align-items: center; // Centre verticalement dans la colonne
+      }
+    }
+  }
+}

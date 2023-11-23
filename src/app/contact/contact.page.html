@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="swap-vertical" slot="start" 
+      style="font-size: 26px; margin-left: 12px;" (click)="toggleSort()"></ion-icon>
+    <ion-label class="label-trier">
+      Trier :
+    </ion-label>
+    <br>
+    <ion-label class="label-trier">
+      {{ isSortedByNom ? 'par lieux' : 'par noms' }}
+    </ion-label>
+  <ion-title>Contacts</ion-title>
+    <i slot="end" class="bi bi-envelope-plus-fill"
+    style="font-size: 28px; margin-right: 26px;"
+    (click)="shareInvit()"></i>
+    <i slot="end" class="bi bi-person-plus-fill"
+    style="font-size: 30px; margin-right: 10px;"></i>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="filterContacts($event)" style="margin-top: 8px;"
+    placeholder="Rechercher par noms ou lieux"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- Affiche les listes filtrées si searchTerm est non vide -->
+  <div *ngIf="searchTerm">
+    <ion-list>
+    <!-- Liste des favoris filtrés -->
+      <ion-item *ngFor="let contact of filteredContacts">
+        <img slot="start" [src]="contact.photoURL">
+        <ion-label>
+          <h2>{{ contact.nom }}</h2>
+          <h3 *ngIf="contact.localisation; else noLocation">
+            <i class="bi bi-geo-fill" style="margin-right: 4px; color: rgb(255, 0, 72);"></i>{{ contact.localisation }}
+          </h3>
+          <ng-template #noLocation>
+            <h3 style="color: grey;">
+              <i class="bi bi-geo-fill" style="margin-right: 4px; color: grey;"></i>Pas en sortie
+            </h3>
+          </ng-template>
+        </ion-label>
+        <div slot="end" class="etat-rond" [ngStyle]="{'background-color': getEtatColor(contact.etat)}"></div>
+          <i slot="end" class="bi bi-three-dots" 
+          (click)="presentPopover($event, contact)"
+          style="font-size: 30px; margin-right: 10px;"></i>
+      </ion-item>
+    </ion-list>
+  </div>
+  
+<div *ngIf="!searchTerm">
+  <ion-list>
+    <ion-list-header>
+      <h1>Favoris</h1>
+    </ion-list-header>
+    <ion-item *ngFor="let contact of favorisContacts | async">
+      <img slot="start" [src]="contact.photoURL">
+      <ion-label>
+        <h2>{{ contact.nom }}</h2>
+        <h3 *ngIf="contact.localisation; else noLocation">
+          <i class="bi bi-geo-fill" style="margin-right: 4px; color: rgb(255, 0, 72);"></i>{{ contact.localisation }}
+        </h3>
+        <ng-template #noLocation>
+          <h3 style="color: grey;">
+            <i class="bi bi-geo-fill" style="margin-right: 4px; color: grey;"></i>Pas en sortie
+          </h3>
+        </ng-template>
+      </ion-label>
+      <div slot="end" class="etat-rond" [ngStyle]="{'background-color': getEtatColor(contact.etat)}"></div>
+        <i slot="end" class="bi bi-three-dots" 
+        (click)="presentPopover($event, contact)"
+        style="font-size: 30px; margin-right: 10px;"></i>
+    </ion-item>
+
+    <ion-list-header>
+      <h1>Autres contacts</h1>
+    </ion-list-header>
+    <ion-item *ngFor="let contact of autresContacts | async">
+      <img slot="start" [src]="contact.photoURL">
+      <ion-label>
+        <h2>{{ contact.nom }}</h2>
+        <h3 *ngIf="contact.localisation; else noLocation">
+          <i class="bi bi-geo-fill" style="margin-right: 4px; color: rgb(255, 0, 72);"></i>{{ contact.localisation }}
+        </h3>
+        <ng-template #noLocation>
+          <h3 style="color: grey;">
+            <i class="bi bi-geo-fill" style="margin-right: 4px; color: grey;"></i>Pas en sortie
+          </h3>
+        </ng-template>
+      </ion-label>
+      <div slot="end" class="etat-rond" [ngStyle]="{'background-color': getEtatColor(contact.etat)}"></div>
+        <i slot="end" class="bi bi-three-dots" 
+        (click)="presentPopover($event, contact)"
+        style="font-size: 30px; margin-right: 10px;"></i>
+    </ion-item>
+  </ion-list>
+</div>
+</ion-content>
+
+<ion-footer *ngIf="!isKeyboardVisible" class="footer">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 3em" size="4" text-center>
+        <ion-icon name="home-outline" (click)="goHome()"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="game-controller-outline"
+        (click)="openGamificationPage()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

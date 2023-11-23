@@ -1,0 +1,118 @@
+.no-scroll {
+    --overflow: hidden;
+    --background: linear-gradient(to bottom, #232323, #121212);
+    --padding-top: 60px;
+  }
+  
+  .start-container {
+    display: flex;
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+    height: 90%;
+  }
+  .results-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+  }
+  
+  .game-area {
+    position: relative;
+    margin-top: 10px;
+    margin: 20px;
+    height: 80%; /* Ajustez la hauteur selon votre design */
+  }
+  
+  .score-timer-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+  
+  .neon-text {
+    font-family: 'Neon', sans-serif;
+    color: #f40;
+    text-shadow:
+      0 0 5px rgba(255, 68, 0, 0),
+      0 0 10px #f40,
+      0 0 20px #f40,
+      0 0 40px #f00,
+      0 0 80px rgba(255, 0, 0, 0);
+    font-size: 1.5em;
+  }
+  
+  .icon {
+    position: absolute;
+    ion-icon {
+      font-size: 70px;
+      cursor: pointer;
+    }
+  }
+    
+  .final-score-display {
+      font-size: 2em; // Agrandissez la taille du texte pour le score final
+      margin: 20px;
+      margin-top: 5px;
+    }
+  
+  .message {
+      padding: 15px;
+      margin-top: 0px;
+      text-align: center;
+      font-size: 1.2em;
+      color: #ffffff;
+    }
+  
+  .messageiconbad {
+      margin-top: 200px;
+      text-align: center;
+      font-size: 12em;
+      color: #ffbb00;
+    }
+  
+  .messageicongood {
+      margin-top: 200px;
+      text-align: center;
+      font-size: 12em;
+      color: #36d700;
+    }
+  
+  .results-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;  
+      flex-direction: row; /* ou 'column' si vous voulez les boutons en pile */
+      margin-top: 150px;
+      gap: 10px;
+    }
+  
+  .results-buttons ion-button {
+      --background: #5e60ce;
+      --background-activated: #4ea8de;
+      --border-radius: 10px;
+      --transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+  
+  .results-buttons ion-icon {
+      margin-right: 8px; /* Espace entre l'icône et le texte */
+    }
+
+//footer
+.footer {
+  ion-toolbar {
+    ion-row {
+      height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+
+      ion-col {
+        display: flex;
+        justify-content: center; // Centre horizontalement dans la colonne
+        align-items: center; // Centre verticalement dans la colonne
+      }
+    }
+  }
+}
