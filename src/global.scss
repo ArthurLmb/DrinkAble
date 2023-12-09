@@ -27,3 +27,48 @@
 
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
+
+//TOAST ETAT OK
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+    .toast-light-theme {
+      --background: white;
+      --box-shadow: 0px 0px 10px rgb(0, 128, 0);
+      --color: darkgreen;
+      font-size: 1.2em;
+      text-align: center;
+    }
+  }
+  
+  /* Mode clair */
+  @media (prefers-color-scheme: light) {
+    .toast-dark-theme {
+      --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
+      --color: darkgreen;
+      font-size: 1.2em;
+      text-align: center;
+    }
+  }
+
+  //TOAST WARNING
+  /* Mode sombre */
+@media (prefers-color-scheme: dark) {
+    .toast-light-theme-warning {
+      --background: white;
+      --box-shadow: 0px 0px 10px rgb(128, 0, 0);
+      --color: rgb(200, 0, 0);
+      font-size: 1.2em;
+      text-align: center;
+    }
+  }
+  
+  /* Mode clair */
+  @media (prefers-color-scheme: light) {
+    .toast-dark-theme-warning {
+      --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.295);
+      --color: rgb(200, 0, 0);
+      font-size: 1.2em;
+      text-align: center;
+    }
+  }
+

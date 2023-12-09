@@ -59,10 +59,10 @@ export class ContactPage implements OnInit, OnDestroy {
 
   async shareInvit() {
     await Share.share({
-      title: "Inviter un amis sur Drink'Able!",
+      title: "Inviter un ami sur Drink'Able!",
       text: `Rejoins moi dès maintenant sur l'application Drink'Able! Ton compagnon pour des sorties plus sûres.`,//a modifier
       url: 'https://lelienpourtelecharcherlappli.com', // Si vous souhaitez ajouter un lien vers votre jeu ou site web
-      dialogTitle: 'Inviter un amis',
+      dialogTitle: 'Inviter un ami',
     })
 
 }
@@ -82,13 +82,13 @@ export class ContactPage implements OnInit, OnDestroy {
     });
   }
 
-  getEtatColor(etat: string): string {
+  getEtatColor(etat: number): string {
   switch (etat) {
-    case 'vert':
+    case 0:
       return 'green';
-    case 'orange':
+    case 1:
       return 'orange';
-    case 'rouge':
+    case 2:
       return 'red';
     default:
       return 'grey'; // Une couleur par défaut si l'état est inconnu
@@ -128,7 +128,7 @@ filterContacts(event: any) {
   }
   
   openGamificationPage() {
-    this.navCtrl.navigateRoot('/reactivity-game', { animated: false });
+    this.navCtrl.navigateRoot('/gamificationhub', { animated: false });
   }
 }
 

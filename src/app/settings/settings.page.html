@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-button (click)="logout()">
+    Déconnexion
+  </ion-button>
+</ion-content>
+
+<ion-footer class="footer">
+  <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
+    <ion-row>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 3em" size="4" text-center>
+        <ion-icon name="home-outline" (click)="goHome()"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="game-controller-outline" (click)="openGamificationPage()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

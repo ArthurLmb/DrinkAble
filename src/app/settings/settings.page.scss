@@ -1,0 +1,17 @@
+
+
+
+//Footer
+.footer {
+    ion-toolbar {
+      ion-row {
+        height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+  
+        ion-col {
+          display: flex;
+          justify-content: center; // Centre horizontalement dans la colonne
+          align-items: center; // Centre verticalement dans la colonne
+        }
+      }
+    }
+  }

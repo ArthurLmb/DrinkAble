@@ -30,11 +30,14 @@ ion-content{
   align-items: stretch; /* Pour que les enfants s'étendent sur toute la largeur */
   height: 100%;
 }
-.edit-loca {
+
+.location-input {
+  max-width: 240px;
+  margin-right: 0px;
 }
 .location-input ion-input {
   --padding-start: 8px; /* Ajustez le padding intérieur */
-  --padding-end: 8px;
+  --padding-end: 0px;
   --padding-top: 8px;
   --padding-bottom: 8px;
   --background: grey; /* Ajustez la couleur de fond */
@@ -72,6 +75,17 @@ ion-content{
   width: 80px; /* Ajustez selon vos besoins */
   margin: 10px;
   text-align: center;
+}
+
+.etat-bubble {
+  max-width: auto;
+  height:370px;
+  border-radius: 50%;
+  border: 6px solid; /* Épaisseur de la bordure */
+  overflow: hidden;
+  margin-bottom: 0px;
+  background-color: transparent;
+  align-items: center; /* Centrer horizontalement */
 }
 
 //photo container contacts & profil
@@ -164,4 +178,8 @@ ion-content{
       }
     }
   }
+}
+
+.toolbar-boutons-modal{
+  padding: 0px; 
 }

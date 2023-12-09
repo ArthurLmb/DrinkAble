@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { BullepopoverComponent } from '../bullepopover/bullepopover.component';
 import { ContactService } from '../services/contact.service';
 import { ProfilService } from '../services/profil.service';
 import { NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { IonicSlides } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +17,8 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  swiperModules = [IonicSlides];
+  slides: any[] = [];
   contacts: any[] = [];
   monprofil: any;
   popoverEvent: any;
@@ -25,16 +31,73 @@ export class HomePage {
     private contactService: ContactService,
     private profilService: ProfilService,
     private popoverController: PopoverController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private authService: AuthService,
+    private loadingController: LoadingController,
+		private alertController: AlertController,
+    private toastController: ToastController,
     
     ) {}
+    monProfil: any;
+
     ngOnInit() {
+      this.slides =[
+        {ads: 'assets/perso/adsamples/1.png' },
+        {ads: 'assets/perso/adsamples/2.png' },
+        {ads: 'assets/perso/adsamples/3.png' },
+        {ads: 'assets/perso/adsamples/4.png' },
+        {ads: 'assets/perso/adsamples/5.png' },
+        {ads: 'assets/perso/adsamples/6.png' },
+        {ads: 'assets/perso/adsamples/7.png' }
+      ]
       this.loadAllContacts();
+      this.loadUserProfile();
       this.profilService.getMonProfil().subscribe(profil => {
         this.monprofil = profil;
         this.newLocalisation = this.monprofil?.localisation || '';
       });
     }
+
+    loadUserProfile() {
+      this.profilService.getMonProfil().subscribe(data => {
+        this.monProfil = data;
+      }, error => {
+        console.error('Erreur lors de la récupération du profil:', error);
+      });
+    }
+
+//bouton test ajout conso
+
+async setEtatToTwo() {
+  if (this.monProfil) {
+    try {
+      await this.profilService.updateEtat(2);
+      await this.presentToastForEtatTwo();
+      console.log("L'état a été mis à jour à 2");
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de l'état à 2", error);
+    }
+  } else {
+    console.error("Profil non chargé ou non existant");
+  }
+}
+
+async presentToastForEtatTwo() {
+  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const toastThemeWarningClass = isDarkMode ? 'toast-light-theme-warning' : 'toast-dark-theme-warning';
+
+  const toast = await this.toastController.create({
+    header: 'Attention !',
+    message: 'Vous êtes probablement trop alcoolisé pour prendre la route.',
+    position: 'top',
+    duration: 5000,
+    cssClass: toastThemeWarningClass,
+  });
+  toast.present();
+}
+
+
+
 
   //header
   openContactPage() {
@@ -65,11 +128,12 @@ export class HomePage {
 
   //Modification profil
 
-  async onUpdateLocalisation() {
+  async onUpdateInfos() {
     try {
       await this.profilService.updateLocalisation(this.newLocalisation);
       // Réinitialisez le champ d'entrée ou effectuez d'autres actions nécessaires.
       this.newLocalisation = '';
+      this.showAlert('Succès', 'Informations mises à jour avec succès');
       this.modalController.dismiss();
     } catch (error) {
       // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
@@ -80,15 +144,40 @@ export class HomePage {
     await this.modalController.dismiss();
   }
 
+  async changeImage() {
+		const image = await Camera.getPhoto({
+			quality: 90,
+			allowEditing: true,
+			resultType: CameraResultType.Base64,
+			source: CameraSource.Photos // Camera, Photos or Prompt!
+		});
+
+		if (image) {
+			const loading = await this.loadingController.create();
+			await loading.present();
+
+			const result = await this.profilService.uploadImage(image);
+			loading.dismiss();
+
+			if (!result) {
+				const alert = await this.alertController.create({
+					header: 'Upload failed',
+					message: 'There was a problem uploading your avatar.',
+					buttons: ['OK']
+				});
+				await alert.present();
+			}
+		}
+	}
 
   //content
-  getBorderColor(etat: string): string {
+  getBorderColor(etat: number): string {
     switch (etat) {
-      case 'vert':
+      case 0:
         return 'green';
-      case 'orange':
-        return 'orange';
-      case 'rouge':
+      case 1:
+        return 'orange';  
+      case 2:
         return 'red';
       default:
         return 'grey'; // Couleur par défaut
@@ -105,8 +194,21 @@ export class HomePage {
     return await popover.present();
   }
 
+  //gestion alerte
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
   //footer
   openGamificationPage() {
-    this.navCtrl.navigateRoot('/reactivity-game', { animated: false });
+    this.navCtrl.navigateRoot('/gamificationhub', { animated: false });
+  }
+  openSettingsPage() {
+    this.navCtrl.navigateRoot('/settings', { animated: false });
   }
 }

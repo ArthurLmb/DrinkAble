@@ -1,0 +1,42 @@
+ion-card {
+    box-sizing: border-box;
+    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  ion-card-title {
+    text-align: center; /* Centre le texte horizontalement */
+  }
+
+ion-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre verticalement */
+    text-align: justify; /* Justifie le texte */
+  }
+
+  .icones {
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    font-size: 5em; /* Ajuste la taille de l'icône */
+  }
+
+  
+//Footer
+.footer {
+    ion-toolbar {
+      ion-row {
+        height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+  
+        ion-col {
+          display: flex;
+          justify-content: center; // Centre horizontalement dans la colonne
+          align-items: center; // Centre verticalement dans la colonne
+        }
+      }
+    }
+  }

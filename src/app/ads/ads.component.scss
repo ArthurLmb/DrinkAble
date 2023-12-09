@@ -1,0 +1,11 @@
+swiper-container {
+    height: auto;
+    padding-bottom: 0px;
+    margin: 0px;
+  }
+
+swiper-container img {
+    height: 100%; /* Ceci garantit que les images remplissent la hauteur du swiper */
+    object-fit: contain; /* Ceci garantit que les images conservent leurs proportions tout en couvrant l'espace disponible */
+    width: 100%; /* Ceci permet de s'assurer que la largeur de l'image s'ajuste automatiquement */
+  }

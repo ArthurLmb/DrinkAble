@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" class="ion-text-center">
+        <!-- Icône d'avatar -->
+        <ion-avatar style="height: 120px; width: 120px; margin: 0 auto; margin-bottom: 25px;">
+          <i (click)="goHome()" style="font-size: 120px;" class="bi bi-person-circle"></i>
+        </ion-avatar>
+        <!-- Label pour modifier la photo -->
+        <p style="font-size: 0.90em;">Modifier votre photo de profil</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <form (ngSubmit)="register()">
+    <ion-toolbar>
+      <p slot="start" style="color: red; margin-left: 15px;">*  =  Obligatoire </p>
+      <u slot="end" style="margin-right: 15px;" (click)="openLoginPage()">J'ai déjà un compte</u>
+    </ion-toolbar>
+    <!--username-->
+    <ion-item>
+      <ion-input class="required-input"
+      [(ngModel)]="userProfile.username" name="username"
+      label= "Username" 
+      placeholder="Nom d'utilisateur unique"
+      type="text"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <p style="color: red;">*</p>
+    </ion-item>
+    <!--prenom-->
+    <ion-item>
+      <ion-input class="required-input"
+      [(ngModel)]="userProfile.prenom" name="prenom"
+      label= "Prénom" 
+      placeholder="Votre prénom"
+      type="text"
+      autocapitalize="true"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <p style="color: red;">*</p>
+    </ion-item>
+    <!--nom de famille-->
+    <ion-item >
+      <ion-input class="notrequired-input"
+      [(ngModel)]="userProfile.nomDeFamille" name="nomDeFamille"
+      label="Nom de famille" 
+      placeholder="Votre nom de famille"
+      type="text"
+      autocapitalize="true"
+      [clearInput]="true">
+    </ion-input>
+    </ion-item>
+    <!--telephone-->
+    <ion-item>
+      <i class="bi bi-telephone" style="margin-right: 10px; font-size: 1.2em;"></i>
+      <ion-input class="required-input"
+      [(ngModel)]="userProfile.telephone" name="telephone"
+      label="Numéro" 
+      placeholder="+32 / _ _ _  _ _  _ _  _ _"
+      [maskito]="phoneMask"
+      [maskitoElement]="maskPredicate"
+      type="tel"
+      inputmode="tel"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <p style="color: red;">*</p>
+    </ion-item>
+    <!--email-->
+    <ion-item>
+      <i class="bi bi-envelope-at" style="margin-right: 10px; font-size: 1.2em;"></i>
+      <ion-input class="required-input"
+      [(ngModel)]="userProfile.email" name="email"
+      label="E-Mail" 
+      placeholder="name@email.com"
+      type="email"
+      inputmode="email"
+      [clearInput]="true"
+      errorText="email invalide"
+      ngModel
+      email
+      required>
+    </ion-input>
+    <p style="color: red;">*</p>
+    </ion-item>
+    <!--ville-->
+    <ion-item>
+      <i class="bi bi-geo" style="margin-right: 10px; font-size: 1.2em;"></i>
+      <ion-input class="notrequired-input"
+      [(ngModel)]="userProfile.ville" name="ville"
+      label="Ville" 
+      placeholder="Où habitez-vous ?"
+      type="text"
+      autocapitalize="true"
+      [clearInput]="true">
+    </ion-input>
+    </ion-item>
+    <!--date de naissance-->
+    <ion-item>
+      <i class="bi bi-calendar-date" style="margin-right: 10px; font-size: 1.2em;"></i>
+      <ion-input class="notrequired-input"
+      [(ngModel)]="userProfile.dateDeNaissance" name="dateDeNaissance"
+      label="Date de Naissance" 
+      placeholder="_ _ /_ _ /_ _ _ _"
+      [maskito]="birthdateMask"
+      [maskitoElement]="maskPredicate"
+      type="numeric"
+      inputmode="numeric"
+      [clearInput]="true">
+    </ion-input>
+    </ion-item>
+    <!--poids-->
+    <ion-item>
+      <ion-icon style="margin-right: 10px; font-size: 1.3em;" name="scale-outline"></ion-icon>
+      <ion-input class="required-input"
+      [(ngModel)]="userProfile.poids" name="poids"
+      label="Poids" 
+      placeholder="___ kg"
+      type="numeric"
+      inputmode="numeric"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <p style="color: red;">*</p>
+    </ion-item>
+    <!--sexe-->
+    <ion-item>
+      <i class="bi bi-gender-ambiguous" style="margin-right: 10px; font-size: 1.2em;"></i>
+      <ion-select [(ngModel)]="userProfile.sexe" name="sexe"
+      interface="action-sheet" placeholder="Homme/Femme" class="required-input" 
+      style="width: 100%; margin-left: 0%; margin-right: 80%; margin-top: 7px; margin-bottom: 7px;">
+        <div slot="label">Sexe</div>
+        <ion-select-option value="h">Homme</ion-select-option>
+        <ion-select-option value="f">Femme</ion-select-option>
+      </ion-select>
+        <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
+    </ion-item>
+    <!--mot de passe-->
+    <ion-item>
+      <ion-icon style="margin-right: 10px; font-size: 1.3em;" name="lock-closed-outline"></ion-icon>
+      <ion-input class="required-input" style="margin-top: 7px; margin-bottom: 7px; max-width: 88%;"
+      [(ngModel)]="password" name="password"
+      label="Password" 
+      placeholder="Min. 8 caractères"
+      type="{{ showPassword ? 'text' : 'password' }}" [(ngModel)]="password"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <ion-icon name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
+    <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
+    </ion-item>
+    <!--confirme mdp-->
+    <ion-item>
+      <ion-icon style="margin-right: 10px; font-size: 1.3em;" name="lock-closed-outline"></ion-icon>
+      <ion-input class="mdpinput" style="margin-top: 7px; margin-bottom: 7px; max-width: 90%;"
+      [(ngModel)]="confirmPassword" name="confirmPassword"
+      placeholder="Confirmer le mot de passe"
+      type="{{ showPassword ? 'text' : 'password' }}" [(ngModel)]="confirmPassword"
+      [clearInput]="true"
+      required>
+    </ion-input>
+    <ion-icon name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
+    <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
+    </ion-item>
+    <div style=" text-align: center;"><ion-button style="margin-bottom: 8%; margin-top: 20px;" type="submit">
+      Confirmer <span><i style="margin-left: 20px; font-size: 1.5em;" class="bi bi-arrow-right"></i></span></ion-button></div>
+  </form>
+</ion-content>

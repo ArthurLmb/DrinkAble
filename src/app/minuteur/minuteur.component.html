@@ -1,0 +1,6 @@
+<div *ngIf="monProfil" class="cercle" [ngStyle]="{'border-color': getBorderColor(monProfil.etat)}">
+  <span *ngIf="monProfil.etat > 0; else greenStatus" class="minuteur">{{ tempsRestant }}</span>
+  <ng-template #greenStatus>
+    <span>vous êtes dans le vert</span>
+  </ng-template>
+</div>

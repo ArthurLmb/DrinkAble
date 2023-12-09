@@ -56,6 +56,10 @@ style="margin-top: 10px;">
     </div>
   </div>
 
+  <app-ads [slides] = "slides"></app-ads>
+
+  <app-minuteur></app-minuteur>
+
   <ion-modal id="profil-modal" trigger="open-profil-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5]">
     <ng-template>
         <ion-header>
@@ -67,7 +71,7 @@ style="margin-top: 10px;">
         </ion-header>
         <div class="edit-toolbar-container">
         <ion-toolbar class="edit-loca">
-          <div slot="start" class="photo-container" style="margin: 5px;"
+          <div slot="start" class="photo-container" style="margin: 5px; margin-left: 0px;"
           [ngStyle]="{'border-color': getBorderColor(monprofil.etat)}">
             <img [src]="monprofil?.photoURL">
           </div>
@@ -75,13 +79,14 @@ style="margin-top: 10px;">
             <i class="bi bi-geo-alt-fill" style="font-size: 26px; color: grey;"></i>
           </div>
           <div slot="start" class="location-input">
-            <ion-input type="text" [(ngModel)]="newLocalisation" [placeholder]="newLocalisation ? null : 'Indiquez où vous sortez'"></ion-input>
+            <ion-input type="text" autocapitalize="true" [clearInput]="true" [(ngModel)]="newLocalisation" 
+            [placeholder]="newLocalisation ? null : 'Vous êtes de sortie ?'"></ion-input>
         </div>
         </ion-toolbar>
-          <p class="modif-photo"><i class="bi bi-images" style="margin-right: 20px;"></i>Choisir dans la bibliothèque</p>
+          <p class="modif-photo"><i class="bi bi-images" style="margin-right: 20px;" (click)="changeImage()"></i>Choisir dans la bibliothèque</p>
           <p class="modif-photo"><i class="bi bi-camera" style="margin-right: 20px;"></i>Prendre une Photo</p>
           <p class="supp-photo"><i class="bi bi-trash3" style="margin-right: 20px;"></i>Supprimer la photo</p>
-          <ion-button color="success" class="confirm-button" (click)="onUpdateLocalisation()">Confirmer</ion-button>
+          <ion-button color="success" class="confirm-button" (click)="onUpdateInfos()">Confirmer</ion-button>
         </div>
     </ng-template>
   </ion-modal>
@@ -158,22 +163,24 @@ style="margin-top: 10px;">
   <ion-toolbar class="toolbar-boutons-modal">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="auto" class="modal-oppener" style="font-size: 2.5em;">
+        <ion-col size="auto" class="modal-oppener" style="font-size: 2.25em;">
           <i id="open-vtc-modal" class="bi bi-taxi-front" style="color: goldenrod;"></i>
         </ion-col>  
-        <ion-col size="auto" class="modal-oppener" style="font-size: 2.5em;">
+        <ion-col size="auto" class="modal-oppener" style="font-size: 2.25em;">
           <i id="open-urgence-modal" class="bi bi-telephone-plus" style="color: red;"></i>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
-  <ion-toolbar>
+  <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
     <ion-row>
       <ion-col style="font-size: 2em" size="4" text-center>
-        <ion-icon name="settings-outline"></ion-icon>
+        <ion-icon name="settings-outline"
+        (click)="openSettingsPage()"></ion-icon>
       </ion-col>
       <ion-col style="font-size: 3em" size="4" text-center>
-        <ion-icon name="beer-outline"></ion-icon>
+        <ion-icon name="beer-outline"
+        (click)="setEtatToTwo()"></ion-icon>
       </ion-col>
       <ion-col style="font-size: 2em" size="4" text-center>
         <ion-icon name="game-controller-outline" 

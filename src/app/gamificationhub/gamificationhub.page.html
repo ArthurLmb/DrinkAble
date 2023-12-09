@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Menu des Jeux</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card (click)="openJeuReactivite()">
+    <ion-card-header>
+      <ion-card-title>Jeux de <span style="color: gold;">Réactivité</span></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="color: gold;" class="icones"><ion-icon name="flash-outline"></ion-icon></div>
+      Testez votre réactivité en cliquant le plus rapidement possible sur les icônes qui apparaissent !
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="openJeuRoulette()">
+    <ion-card-header>
+      <ion-card-title>Roulette <span style="color: blueviolet;">BOB</span></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="color: blueviolet;" class="icones"><ion-icon name="nuclear-outline"></ion-icon></div>
+      Vous n'arrivez pas à décider qui sera le BOB ce soir ? Pas de panique ! Notre roulette est faite pour vous.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Comming Soon...</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="color: orange;" class="icones"><ion-icon name="construct-outline"></ion-icon></div>
+      Découvrez des nouveaux jeux bientôt !
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer class="footer">
+  <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
+    <ion-row>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 3em" size="4" text-center>
+        <ion-icon name="home-outline" (click)="goHome()"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="game-controller-outline" (click)="openGamificationPage()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

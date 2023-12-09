@@ -1,0 +1,31 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ion-color-white {
+    --ion-background-color: #ffffff;
+    --ion-text-color: #000000;
+  }
+  
+  .ion-color-black {
+    --ion-background-color: #000000;
+    --ion-text-color: #ffffff;
+  }
+
+.cercle {
+    margin-top: 5px;
+    width: 90%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 8px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .minuteur {
+    /* Style pour le texte du minuteur */
+    font-size: 20px;
+  }

@@ -1,0 +1,19 @@
+.notrequired-input{
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+  ion-toolbar {
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+  ion-title {
+    max-width: 100%;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  ion-icon[name="eye-outline"], ion-icon[name="eye-off-outline"] {
+    font-size: 25px;
+    margin-right: 7px;
+  }
+

@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Roulette BOB</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div class="page-container">
+  
+  <!-- Conteneur de la roulette -->
+  <div class="roulette-container">
+    <!-- Roulette elle-même -->
+    <div class="roulette" [ngStyle]="{ 'transform': 'rotate(' + degree + 'deg)' }">
+      <!-- Boucle sur chaque segment dans le tableau des segments -->
+      <div *ngFor="let segment of segments; let i = index" 
+           class="segment" 
+           [ngStyle]="{
+             'background-color': segment.color,
+             'transform': 'rotate(' + (i * (360 / segments.length)) + 'deg)',
+             'clip-path': 'polygon(50% 50%, 100% 0, 100% 100%)'
+           }">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tableau montrant les segments ajoutés -->
+<div class="segments-table" *ngIf="showTable">
+  <table>
+    <!-- En-têtes du tableau -->
+    <tr>
+      <th>Nom</th>
+      <th>Couleur</th>
+    </tr>
+    <!-- Lignes du tableau pour chaque segment -->
+    <tr *ngFor="let segment of segments">
+      <td>{{ segment.name }}</td>
+      <td [ngStyle]="{'background-color': segment.color}">{{ segment.color }}</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Conteneur pour les contrôles de la page -->
+<div class="control-container">
+  <!-- Bouton pour lancer la roulette -->
+  <button (click)="spinWheel()">Lancer la roulette</button>
+
+  <!-- Bouton pour afficher/masquer le tableau des segments -->
+  <button (click)="toggleTable()">Afficher les couleurs</button>
+
+  <!-- Liste déroulante pour sélectionner un nom existant -->
+  <select #nameSelector>
+    <option *ngFor="let name of selectableNames" [value]="name">{{ name }}</option>
+  </select>
+
+  <!-- Bouton pour ajouter un segment avec le nom sélectionné -->
+  <button (click)="addSegment(nameSelector.value)">Ajouter le contact</button>
+
+  <!-- Champ de saisie pour ajouter un nouveau nom -->
+  <input type="text" placeholder="Ajouter un nouveau nom" #newNameInput>
+  <!-- Bouton pour ajouter le nouveau nom à la liste et à la roulette -->
+  <button  (click)="addNewName(newNameInput)">Ajouter le nom</button>
+
+</div>
+</ion-content>
+
+<ion-footer class="footer">
+  <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
+    <ion-row>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 3em" size="4" text-center>
+        <ion-icon name="home-outline" (click)="goHome()"></ion-icon>
+      </ion-col>
+      <ion-col style="font-size: 2em" size="4" text-center>
+        <ion-icon name="game-controller-outline" (click)="openGamificationPage()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

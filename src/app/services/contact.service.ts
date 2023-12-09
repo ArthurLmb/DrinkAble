@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, addDoc, deleteDoc, updateDoc, doc, query, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })

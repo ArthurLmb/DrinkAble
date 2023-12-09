@@ -1,0 +1,103 @@
+
+
+.page-container{
+    max-height: 350px;
+    width: auto;
+}
+
+.roulette-container {
+    width: 300px; /* Largeur fixe de la roulette */
+    height: 300px; /* Hauteur fixe de la roulette */
+    border-radius: 50%; /* Rend le conteneur circulaire */
+    position: relative; /* Nécessaire pour positionner les segments de manière absolue à l'intérieur */
+    overflow: hidden; /* Cache les parties des segments qui dépassent */
+    border: 2px solid grey; /* Bordure noire autour de la roulette */
+    box-shadow: 0 0 10px rgb(147, 147, 147); /* Ombre portée pour un effet 3D */
+  }
+  
+  /* Style pour la roulette elle-même */
+  .roulette {
+    width: 100%; /* Occupe toute la largeur du conteneur */
+    height: 100%; /* Occupe toute la hauteur du conteneur */
+    position: relative; /* Position relative pour le positionnement des segments */
+    transition: transform 8s; /* Animation douce de rotation sur 4 secondes */
+  }
+  
+  /* Style pour chaque segment de la roulette */
+  .segment {
+    width: 100%; /* Largeur égale à celle de la roulette */
+    height: 50%; /* Hauteur égale à la moitié de la roulette pour couvrir un arc de cercle */
+    position: absolute; /* Positionné absolument par rapport à la roulette */
+    left: 0; /* Aligné à gauche dans la roulette */
+    top: 0; /* Aligné en haut dans la roulette */
+    border: 2px solid #000; /* Bordure noire autour de chaque segment */
+    transform-origin: 50% 100%; /* Point d'origine de la transformation pour la rotation */
+  }
+  
+  /* Style pour le tableau affichant les noms et les couleurs */
+  .segments-table {
+    margin-top: 20px; /* Marge au-dessus du tableau */
+  }
+  .segments-table table {
+    width: 100%; /* Largeur totale du tableau */
+    border-collapse: collapse; /* Les bordures des cellules s'effondrent en une seule bordure */
+  }
+  
+  .segments-table th, .segments-table td {
+    border: 1px solid #ddd; /* Bordure pour les entêtes et cellules */
+    padding: 8px; /* Espace intérieur pour les entêtes et cellules */
+    text-align: left; /* Alignement du texte à gauche */
+  }
+  .segments-table th {
+    background-color: grey; /* Couleur de fond pour les entêtes */
+  }
+  
+  /* Style pour le conteneur des contrôles */
+  .control-container {
+    display: flex; /* Disposition Flexbox pour un alignement facile des éléments */
+    flex-direction: column; /* Empilement vertical des éléments */
+    align-items: stretch; /* Les éléments s'étendent pour remplir la largeur du conteneur */
+    gap: 10px; /* Espacement entre les éléments */
+    font-size: large;
+  }
+  
+  .control-container > * {
+    padding: 10px; /* Padding pour chaque élément à l'intérieur du conteneur */
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur et la hauteur totales */
+  }
+  
+  /* Style pour les éléments <select> */
+  select {
+    width: 100%; /* Largeur totale pour occuper l'espace disponible */
+    padding: 8px; /* Padding pour un meilleur confort */
+    font-size: 1em; /* Taille de la police pour une meilleure lisibilité */
+    border: 2px solid #007bff; /* Bordure bleue */
+    border-radius: 5px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre portée légère */
+    background-color: #fff; /* Fond blanc */
+    color: #333; /* Couleur du texte noir */
+    margin-bottom: 10px; /* Marge en dessous du <select> */
+  }
+  
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre verticalement dans le conteneur */
+    align-items: center; /* Centre horizontalement dans le conteneur */
+    height: 100vh; /* Utilise la hauteur de la fenêtre */
+  }
+
+//footer
+.footer {
+    ion-toolbar {
+      ion-row {
+        height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+  
+        ion-col {
+          display: flex;
+          justify-content: center; // Centre horizontalement dans la colonne
+          align-items: center; // Centre verticalement dans la colonne
+        }
+      }
+    }
+  }
