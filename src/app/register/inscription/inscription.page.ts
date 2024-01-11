@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
-import { AuthService, UserProfile } from '../services/auth.service'; 
+import { AuthService, UserProfile } from '../../services/auth.service'; 
 import { AlertController, LoadingController } from '@ionic/angular';
 
 
@@ -23,12 +24,19 @@ export class InscriptionPage implements OnInit {
     poids: null,
     sexe: null,
   };
+  selectedCity: string = '';
+  customCity: string = '';
+  showCustomCityField: boolean = false;
+
   password: string ='';
   confirmPassword: string ='';
-  selectedImage: File | null = null;
   showPassword: boolean = false; // Pour gérer la visibilité du mot de passe
+  
+  selectedImage: File | null = null;
+  
   constructor(
     private navCtrl: NavController,
+    private router: Router,
     private authService: AuthService,
     private loadingController: LoadingController,
 		private alertController: AlertController,
@@ -44,12 +52,39 @@ export class InscriptionPage implements OnInit {
     }
   }
 
+  onCityChange() {
+    this.showCustomCityField = this.selectedCity === 'Autre';
+    if (!this.showCustomCityField) {
+      this.userProfile.ville = this.selectedCity;
+    }
+  }
+
+  onSexeChange(event: any) {
+    if (event.detail.value === 'autre') {
+      this.showSexeAlert();
+    }
+  }
+
+  async showSexeAlert() {
+    const alert = await this.alertController.create({
+      header: 'Attention',
+      message: "En choisissant 'Autre', notre compteur d'alcoolémie sera moins précis.",
+      buttons: ["J'ai compris"]
+    });
+    await alert.present();
+  }
+
   async register() {
     // Vérifier si les mots de passe correspondent
     if (this.password !== this.confirmPassword) {
       console.error('Les mots de passe ne correspondent pas');
       this.showAlert('Erreur', 'Les mots de passe ne correspondent pas');
       return;
+    }
+  
+    // Si l'utilisateur a choisi "Autre", assignez la ville personnalisée
+    if (this.showCustomCityField) {
+      this.userProfile.ville = this.customCity;
     }
   
     const loading = await this.loadingController.create({
@@ -64,7 +99,7 @@ export class InscriptionPage implements OnInit {
       console.log('Inscription réussie');
       await loading.dismiss(); // Ferme le chargement
       this.showAlert("Inscription réussie", "Bienvenue sur Drink'Able !");
-      this.navCtrl.navigateRoot('/home', { animated: false });
+      this.router.navigateByUrl('/disclaimer');
       // Redirection ou autres actions après une inscription réussie
     } catch (error) {
       console.error('Erreur lors de l\'inscription:', error);
@@ -72,6 +107,7 @@ export class InscriptionPage implements OnInit {
       this.showAlert('Erreur', 'Échec de l\'inscription');
     }
   }
+  
   
 
 

@@ -45,19 +45,38 @@ async uploadImage(cameraFile: Photo) {
     return null;
   }
 
-  const path = `uploads/${user.uid}/profile.webp`;
+  const path = `uploads/${user.uid}/profile.jpg`;
   const storageRef = ref(this.storage, path);
 
   try {
     await uploadString(storageRef, cameraFile.base64String, 'base64');
-    const imageUrl = await getDownloadURL(storageRef);
+    const photoURL = await getDownloadURL(storageRef);
     const userDocRef = doc(this.firestore, `users/${user.uid}`);
-    await setDoc(userDocRef, { imageUrl }, { merge: true });
+    await setDoc(userDocRef, { photoURL }, { merge: true });
     console.log('Image téléchargée avec succès');
-    return imageUrl;
+    return photoURL;
   } catch (e) {
     console.error('Erreur lors du téléchargement de l\'image', e);
     return null;
+  }
+}
+
+// Supprimer la photo
+async deletePhoto(noPhoto: string): Promise<void> {
+  if (this.auth.currentUser) {
+    const uid = this.auth.currentUser.uid;
+    const profilRef = doc(this.firestore, `users/${uid}`);
+    try {
+      await updateDoc(profilRef, { photoURL: noPhoto });
+      console.log('Photo supprimé');
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la photo', error);
+      this.showAlert('Echec', 'Erreur lors de la suppression de la photo');
+      throw error;
+    }
+  } else {
+    // Gérez le cas où aucun utilisateur n'est connecté
+    throw new Error("Aucun utilisateur connecté");
   }
 }
   

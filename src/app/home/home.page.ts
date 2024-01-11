@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { IonicSlides } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +24,7 @@ export class HomePage {
   popoverEvent: any;
   currentFilter: string = 'all'; // 'all' ou 'favorites'
   newLocalisation: string = '';
+  defaultPhoto: string = '';
 
   constructor(
     private router: Router,
@@ -48,7 +49,8 @@ export class HomePage {
         {ads: 'assets/perso/adsamples/4.png' },
         {ads: 'assets/perso/adsamples/5.png' },
         {ads: 'assets/perso/adsamples/6.png' },
-        {ads: 'assets/perso/adsamples/7.png' }
+        {ads: 'assets/perso/adsamples/7.png' },
+        {ads: 'assets/perso/adsamples/8.png' },
       ]
       this.loadAllContacts();
       this.loadUserProfile();
@@ -56,6 +58,12 @@ export class HomePage {
         this.monprofil = profil;
         this.newLocalisation = this.monprofil?.localisation || '';
       });
+    }
+
+    getGreeting() {
+      const hour = new Date().getHours();
+      const salutation = (hour >= 18 || hour < 6) ? 'Bonsoir' : 'Bonjour';
+      return `${salutation} ${this.monprofil?.prenom}`;
     }
 
     loadUserProfile() {
@@ -72,7 +80,7 @@ async setEtatToTwo() {
   if (this.monProfil) {
     try {
       await this.profilService.updateEtat(2);
-      await this.presentToastForEtatTwo();
+      await this.presentToastForEtatRed();
       console.log("L'état a été mis à jour à 2");
     } catch (error) {
       console.error("Erreur lors de la mise à jour de l'état à 2", error);
@@ -82,7 +90,7 @@ async setEtatToTwo() {
   }
 }
 
-async presentToastForEtatTwo() {
+async presentToastForEtatRed() {
   const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const toastThemeWarningClass = isDarkMode ? 'toast-light-theme-warning' : 'toast-dark-theme-warning';
 
@@ -133,23 +141,115 @@ async presentToastForEtatTwo() {
       await this.profilService.updateLocalisation(this.newLocalisation);
       // Réinitialisez le champ d'entrée ou effectuez d'autres actions nécessaires.
       this.newLocalisation = '';
-      this.showAlert('Succès', 'Informations mises à jour avec succès');
+      this.showAlert('Succès', 'Localisation mise à jour avec succès');
       this.modalController.dismiss();
     } catch (error) {
       // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
     }
   }
 
+  async onDeletePhoto() {
+    const confirmed = await this.showDeleteConfirmation();
+    if (confirmed) {
+      try {
+        await this.profilService.deletePhoto(this.defaultPhoto);
+        this.defaultPhoto = '';
+        this.showAlert('Succès', 'Photo supprimée');
+      } catch (error) {
+        // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
+      }
+    }
+  }
+
+  async showDeleteConfirmation(): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        header: 'Confirmer',
+        message: 'Êtes-vous sûr de vouloir supprimer cette photo ?',
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            handler: () => resolve(false)
+          },
+          {
+            text: 'Supprimer',
+            handler: () => resolve(true)
+          }
+        ]
+      });
+  
+      await alert.present();
+    });
+  }
+
   async dismissModal() {
     await this.modalController.dismiss();
   }
 
-  async changeImage() {
+  async changeImageFromGallery() {
 		const image = await Camera.getPhoto({
 			quality: 90,
 			allowEditing: true,
+      direction: CameraDirection.Front,
 			resultType: CameraResultType.Base64,
 			source: CameraSource.Photos // Camera, Photos or Prompt!
+		});
+
+		if (image) {
+			const loading = await this.loadingController.create();
+			await loading.present();
+
+			const result = await this.profilService.uploadImage(image);
+			loading.dismiss();
+
+			if (!result) {
+				const alert = await this.alertController.create({
+					header: 'Upload failed',
+					message: 'There was a problem uploading your avatar.',
+					buttons: ['OK']
+				});
+				await alert.present();
+			}
+		}
+	}
+
+  async changeImageFromCamera() {
+		const image = await Camera.getPhoto({
+			quality: 90,
+			allowEditing: true,
+      direction: CameraDirection.Front,
+			resultType: CameraResultType.Base64,
+			source: CameraSource.Camera // Camera, Photos or Prompt!
+		});
+
+		if (image) {
+			const loading = await this.loadingController.create();
+			await loading.present();
+
+			const result = await this.profilService.uploadImage(image);
+			loading.dismiss();
+
+			if (!result) {
+				const alert = await this.alertController.create({
+					header: 'Upload failed',
+					message: 'There was a problem uploading your avatar.',
+					buttons: ['OK']
+				});
+				await alert.present();
+			}
+		}
+	}
+
+  async changeImageFromPrompt() {
+		const image = await Camera.getPhoto({
+			quality: 90,
+			allowEditing: true,
+      direction: CameraDirection.Front,
+			resultType: CameraResultType.Base64,
+			source: CameraSource.Prompt,// Camera, Photos or Prompt!
+      promptLabelPhoto:'Choisir depuis la gallerie',
+      promptLabelPicture: 'Prendre une photo',
 		});
 
 		if (image) {

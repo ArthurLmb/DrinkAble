@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'inscription',
-    loadChildren: () => import('./inscription/inscription.module').then( m => m.InscriptionPageModule)
+    loadChildren: () => import('./register/inscription/inscription.module').then( m => m.InscriptionPageModule)
   },
   {
     path: 'roulette',
@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'disclaimer',
+    loadChildren: () => import('./register/disclaimer/disclaimer.module').then( m => m.DisclaimerPageModule)
   },
 ];
 

@@ -1,5 +1,11 @@
+<div *ngIf="monProfil"  class="progress"> 
+  <ion-progress-bar style="height: 10px;"
+  [value]="monProfil.etat === 0 ? 1 : progress"
+  [color]="getProgressColor(monProfil.etat)">
+</ion-progress-bar></div>
 <div *ngIf="monProfil" class="cercle" [ngStyle]="{'border-color': getBorderColor(monProfil.etat)}">
-  <span *ngIf="monProfil.etat > 0; else greenStatus" class="minuteur">{{ tempsRestant }}</span>
+  <span *ngIf="monProfil.etat > 0; else greenStatus" class="minuteur">
+    {{ formatTime(tempsRestant) }}</span>
   <ng-template #greenStatus>
     <span>vous êtes dans le vert</span>
   </ng-template>

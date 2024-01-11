@@ -1,8 +1,10 @@
+<!-- Component du slider de publicité-->
+
 <swiper-container *ngIf="slides.length > 0"
 [modules]="swiperModules" 
 [slidesPerView]="1" 
 [loop]="false" 
-[autoplay]="{ delay: 3500 }" 
+[autoplay]="{ delay: 3500 }"
 [initialSlide]="0">
   <swiper-slide *ngFor="let slide of slides">
     <img [src]="slide?.ads" />

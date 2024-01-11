@@ -2,23 +2,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { ProfilService } from '../services/profil.service';
 import { NgStyle, NgIf } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-minuteur',
   templateUrl: './minuteur.component.html',
   styleUrls: ['./minuteur.component.scss'],
   standalone: true,
-  imports: [NgStyle, NgIf]
+  imports: [NgStyle, NgIf, IonicModule]
 })
 export class MinuteurComponent implements OnInit, OnDestroy {
   monProfil: any;
   tempsRestant: number = 0; // Durée initiale en secondes
   intervalId: any;
+  progress = 1;
 
   constructor(
     private profilService: ProfilService,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
   ) { }
 
   async ngOnInit() {
@@ -36,16 +39,38 @@ export class MinuteurComponent implements OnInit, OnDestroy {
       console.error('Erreur lors de la récupération du profil:', error);
       await loading.dismiss();
     });
+    const perm = await LocalNotifications.requestPermissions();
+  if (perm.display === 'granted') {
+    // L'utilisateur a accepté les notifications
+  }
+  }
+  
+
+  formatTime(tempsEnSecondes: number): string {
+    const heures = Math.floor(tempsEnSecondes / 3600);
+    const minutes = Math.floor((tempsEnSecondes % 3600) / 60);
+    const secondes = tempsEnSecondes % 60;
+
+    const heuresFormattees = heures.toString().padStart(1, '0');
+    const minutesFormattees = minutes.toString().padStart(2, '0');
+    const secondesFormattees = secondes.toString().padStart(2, '0');
+
+    return `${heuresFormattees}:${minutesFormattees}:${secondesFormattees}`;
   }
 
   startTimer() {
+    const initialTime = 10;
+    this.tempsRestant = initialTime;
+    this.progress = 1;
+  
     if (this.intervalId) {
       clearInterval(this.intervalId); // Arrêtez l'intervalle existant si nécessaire
-      this.tempsRestant = 4; // Réinitialiser le temps restant
     }
+  
     this.intervalId = setInterval(() => {
       if (this.tempsRestant > 0) {
         this.tempsRestant--;
+        this.progress = this.tempsRestant / initialTime;
       } else {
         this.handleTimerEnd();
       }
@@ -58,11 +83,23 @@ export class MinuteurComponent implements OnInit, OnDestroy {
       try {
         const newEtat = this.monProfil.etat - 1;
         await this.profilService.updateEtat(newEtat);
-        this.monProfil.etat = newEtat;
   
         if (this.monProfil.etat === 0) {
           // L'état est maintenant à 0, afficher le toast de félicitations
           await this.presentToastForEtatZero();
+          await LocalNotifications.schedule({
+            notifications: [
+              {
+                title: "Taux d'alcoolémie",
+                body: "Super ! Vous devriez être dans le vert",
+                id: 1,
+                schedule: { at: new Date(Date.now() + 6000) },
+                sound: "beep.wav", // Dans 1 seconde
+                smallIcon: "path/to/smallIcon.png", // Optionnel, spécifiez le chemin vers une petite icône
+                // Autres paramètres de notification peuvent être spécifiés ici
+              },
+            ],
+          });
         } else {
           // Si l'état n'est pas 0, redémarrer le minuteur
           this.startTimer();
@@ -80,7 +117,7 @@ export class MinuteurComponent implements OnInit, OnDestroy {
 
     const toast = await this.toastController.create({
       header: 'Dans le vert !',
-      message: 'Super, vous devriez pouvoir reprendre la route en toute sécurité.',
+      message: 'Super, vous devriez pouvoir reprendre la route en toute sécurité',
       position: 'top',
       duration: 5000,
       cssClass: toastThemeClass,
@@ -106,4 +143,18 @@ export class MinuteurComponent implements OnInit, OnDestroy {
         return 'grey'; // Couleur par défaut
     }
   }
+
+  getProgressColor(etat: number): string {
+    switch (etat) {
+      case 0:
+        return 'success';
+      case 1:
+        return 'warning';  
+      case 2:
+        return 'danger';
+      default:
+        return 'grey'; // Couleur par défaut
+    }
+  }
+  
 }

@@ -53,6 +53,12 @@ export class ContactPopoverComponent {
           }
         },
         {
+          text: 'Waze',
+          handler: () => {
+            this.ouvrirAdresseSurCarte('waze');
+          }
+        },
+        {
           text: 'Annuler',
           role: 'cancel',
           cssClass: 'secondary'
@@ -71,6 +77,8 @@ export class ContactPopoverComponent {
       url = `https://www.google.com/maps/search/?api=1&query=${adresseEncodee}`;
     } else if (type === 'apple') {
       url = `maps://maps.apple.com/?q=${adresseEncodee}`;
+    } else if (type === 'waze') {
+      url = `https://waze.com/ul?q=${adresseEncodee}`;
     }
   
     // Vérifiez si 'url' a été défini avant de l'ouvrir

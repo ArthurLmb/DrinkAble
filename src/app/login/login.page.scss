@@ -1,0 +1,44 @@
+
+.toolbar{
+    --background: #df4056;
+    --color: white;
+}
+
+.logo-container {
+    display: flex; /* Utilise flexbox pour le positionnement */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center;
+}
+
+.cropped {
+    display: flex; /* Utilise flexbox pour le positionnement */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center;
+    overflow: hidden; /* Cache les parties de l'image qui dépassent */
+    width: 500px; /* Ou toute autre largeur */
+    height: auto; /* Ou toute autre hauteur */
+}
+
+.cropped img {
+    display: flex; /* Utilise flexbox pour le positionnement */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; 
+    object-fit: cover; /* Assure que l'image couvre entièrement le conteneur */
+
+}
+
+.register{
+    margin-top: 20px;
+    display: flex; /* Utilise flexbox pour le positionnement */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center;
+}
+
+.input{
+    font-size: 1.1em;
+}
+
+.button{
+    --background: #df4056;
+    --background-activated: #df4c42;
+}

@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header style="margin-bottom: 0px;">
   <ion-toolbar>
-    <ion-title>Inscription</ion-title>
+    <ion-title style="margin-bottom: 0px;">Inscription</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -94,14 +94,25 @@
     <!--ville-->
     <ion-item>
       <i class="bi bi-geo" style="margin-right: 10px; font-size: 1.2em;"></i>
-      <ion-input class="notrequired-input"
-      [(ngModel)]="userProfile.ville" name="ville"
-      label="Ville" 
-      placeholder="Où habitez-vous ?"
+      <ion-select [(ngModel)]="selectedCity" (ionChange)="onCityChange()" name="ville"
+        interface="action-sheet" placeholder="Où habitez-vous ?" class="notrequired-input"
+        style="width: 100%; margin-left: 0%; margin-right: 80%; margin-top: 7px; margin-bottom: 7px;">
+          <div slot="label">Ville</div>
+          <ion-select-option value="Bruxelles">Bruxelles</ion-select-option>
+          <ion-select-option value="Charleroi">Charleroi</ion-select-option>
+          <ion-select-option value="Liège">Liège</ion-select-option>
+          <ion-select-option value="Mons">Mons</ion-select-option>
+          <ion-select-option value="Namur">Namur</ion-select-option>
+          <ion-select-option value="Autre">Autre</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="showCustomCityField">
+      <ion-input [(ngModel)]="customCity" name="customVille"
       type="text"
       autocapitalize="true"
-      [clearInput]="true">
-    </ion-input>
+      [clearInput]="true"
+      placeholder="Entrez votre ville">
+      </ion-input>
     </ion-item>
     <!--date de naissance-->
     <ion-item>
@@ -135,14 +146,16 @@
     <ion-item>
       <i class="bi bi-gender-ambiguous" style="margin-right: 10px; font-size: 1.2em;"></i>
       <ion-select [(ngModel)]="userProfile.sexe" name="sexe"
-      interface="action-sheet" placeholder="Homme/Femme" class="required-input" 
-      style="width: 100%; margin-left: 0%; margin-right: 80%; margin-top: 7px; margin-bottom: 7px;">
-        <div slot="label">Sexe</div>
-        <ion-select-option value="h">Homme</ion-select-option>
-        <ion-select-option value="f">Femme</ion-select-option>
+        interface="action-sheet" placeholder="Choisir un sexe" class="required-input" 
+        style="width: 100%; margin-left: 0%; margin-right: 80%; margin-top: 7px; margin-bottom: 7px;"
+        (ionChange)="onSexeChange($event)">
+          <div slot="label">Sexe</div>
+          <ion-select-option value="h">Homme</ion-select-option>
+          <ion-select-option value="f">Femme</ion-select-option>
+          <ion-select-option value="autre">Autre</ion-select-option>
       </ion-select>
-        <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
-    </ion-item>
+      <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
+    </ion-item>    
     <!--mot de passe-->
     <ion-item>
       <ion-icon style="margin-right: 10px; font-size: 1.3em;" name="lock-closed-outline"></ion-icon>
@@ -151,7 +164,6 @@
       label="Password" 
       placeholder="Min. 8 caractères"
       type="{{ showPassword ? 'text' : 'password' }}" [(ngModel)]="password"
-      [clearInput]="true"
       required>
     </ion-input>
     <ion-icon name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
@@ -164,13 +176,13 @@
       [(ngModel)]="confirmPassword" name="confirmPassword"
       placeholder="Confirmer le mot de passe"
       type="{{ showPassword ? 'text' : 'password' }}" [(ngModel)]="confirmPassword"
-      [clearInput]="true"
       required>
     </ion-input>
     <ion-icon name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end" (click)="togglePasswordVisibility()"></ion-icon>
     <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>
     </ion-item>
-    <div style=" text-align: center;"><ion-button style="margin-bottom: 8%; margin-top: 20px;" type="submit">
-      Confirmer <span><i style="margin-left: 20px; font-size: 1.5em;" class="bi bi-arrow-right"></i></span></ion-button></div>
+    
+  <ion-button class="button" expand="block" style="margin-bottom: 8%; margin-top: 20px;" type="submit">
+      Confirmer</ion-button>
   </form>
 </ion-content>

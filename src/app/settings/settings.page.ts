@@ -41,6 +41,9 @@ export class SettingsPage {
   goHome() {
     this.navCtrl.navigateRoot('/home', { animated: false });
   }
+  goDisclaimer() {
+    this.navCtrl.navigateRoot('/disclaimer', { animated: false });
+  }
   
   openGamificationPage() {
     this.navCtrl.navigateRoot('/gamificationhub', { animated: false });

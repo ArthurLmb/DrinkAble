@@ -1,22 +1,20 @@
-:host {
+
+.progress {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .ion-color-white {
-    --ion-background-color: #ffffff;
-    --ion-text-color: #000000;
-  }
-  
-  .ion-color-black {
-    --ion-background-color: #000000;
-    --ion-text-color: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 0px;
   }
 
 .cercle {
-    margin-top: 5px;
-    width: 90%;
+    overflow: hidden;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;  /* Centrer horizontalement */
+    margin-right: auto;
+    height: 58%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: 8px solid;
@@ -27,5 +25,5 @@
   
   .minuteur {
     /* Style pour le texte du minuteur */
-    font-size: 20px;
+    font-size: 1.5em;
   }

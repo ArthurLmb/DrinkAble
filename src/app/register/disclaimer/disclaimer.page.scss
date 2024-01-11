@@ -1,0 +1,30 @@
+ion-toolbar {
+    --padding-start: 0;
+    --padding-end: 0;
+    padding: 0px;
+    margin-bottom: 5px;
+
+  }
+  ion-title {
+    max-width: 100%;
+    padding: 0px;
+    text-align: center;
+  }
+
+p{
+margin: 5px;
+font-size: 18px;
+}
+
+.emoji{
+  font-size: 1.5em;
+}
+
+.titres{
+  font-size: 22px;
+}
+
+strong{
+  margin-right: 5px;
+  margin-left: 5px;
+}
