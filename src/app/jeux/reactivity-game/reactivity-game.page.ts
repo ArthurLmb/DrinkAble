@@ -30,6 +30,13 @@ export class ReactivityGamePage {
     this.showResults = false;
   }
 
+  openSettingsPage() {
+    this.navCtrl.navigateRoot('/settings', { animated: false });
+    clearInterval(this.timer);
+    this.gameStarted = false;
+    this.showResults = false;
+  }
+
   ngOnInit() {}
 
   startGame() {
@@ -81,14 +88,14 @@ export class ReactivityGamePage {
   }
 
   restartGame() {
-    this.startGame(); // Vous pouvez réutiliser la méthode startGame pour redémarrer
+    this.startGame(); 
   }
 
   async shareScore() {
     await Share.share({
       title: 'Mon score au jeu de réactivité',
       text: `J'ai obtenu un score de ${this.score} au jeu de réactivité de Drink'Able! Rejoins moi dès maintenant sur l'application !`,//a modifier
-      url: 'https://lelienpourtelecharcherlappli.com', // Si vous souhaitez ajouter un lien vers votre jeu ou site web
+      url: 'https://lelienpourtelecharcherlappli.com', // lien pour dl l'app
       dialogTitle: 'Partager votre score',
     })   
   }

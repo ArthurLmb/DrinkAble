@@ -87,10 +87,12 @@ style="margin-top: 10px;">
             [placeholder]="newLocalisation ? null : 'Vous êtes de sortie ?'"></ion-input>
         </div>
         </ion-toolbar>
-          <p (click)="changeImageFromGallery()" class="modif-photo"><i class="bi bi-images" style="margin-right: 20px;" ></i>Choisir dans la bibliothèque</p>
+        <ion-toolbar style="margin-top: 0px;"><ion-button style="margin-top: 0px;" size="small"
+          slot="end" color="success" class="confirm-button" (click)="onUpdateInfos()">Confirmer</ion-button>
+        </ion-toolbar>
+          <p style="margin-top: 15px;" (click)="changeImageFromGallery()" class="modif-photo"><i class="bi bi-images" style="margin-right: 20px;" ></i>Choisir dans la bibliothèque</p>
           <p (click)="changeImageFromCamera()" class="modif-photo"><i class="bi bi-camera" style="margin-right: 20px;"></i>Prendre une Photo</p>
           <p (click)="onDeletePhoto()" class="supp-photo"><i class="bi bi-trash3" style="margin-right: 20px;"></i>Supprimer la photo</p>
-          <ion-button color="success" class="confirm-button" (click)="onUpdateInfos()">Confirmer</ion-button>
         </div>
     </ng-template>
   </ion-modal>
@@ -128,38 +130,52 @@ style="margin-top: 10px;">
       </ion-content>
     </ng-template>
   </ion-modal>
+ 
 
   <ion-modal id="urgence-modal" trigger="open-urgence-modal" [initialBreakpoint]="0.3" [breakpoints]="[0, 0.3]">
     <ng-template>
-      <ion-content>
-        <p class="modal-title">Numéros d'urgence</p>
-        <ion-grid>
-          <ion-row class="detail-modal">
-            <ion-col size="auto" >
-              <a href="tel:112">
-                <img src="assets/perso/urgences/112.png" alt="appel 112"></a>
-                <ion-label>Urgences</ion-label>
-            </ion-col>
-            <ion-col size="auto">
-              <a href="tel:101">
-                <img src="assets/perso/urgences/police.png" alt="appel police" style="background-color: #1e4ba8"></a>
-                <ion-label>Police</ion-label>
-              </ion-col>
-            <ion-col size="auto">
-              <a href="tel:0491894174">
-                <img src="assets/perso/urgences/plus.png" alt="plus"></a>
-                <ion-label>Ajouter</ion-label>
-            </ion-col>
-            <ion-col size="auto">
-              <a href="">
-                <img src="assets/perso/urgences/plus.png" alt="plus"></a>
-                <ion-label>Ajouter</ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
+        <ion-content>
+            <p class="modal-title">Numéros d'urgence</p>
+            <ion-grid>
+                <ion-row class="detail-modal">
+                    <!-- Autres numéros prédéfinis -->
+                    <ion-col size="auto">
+                        <a href="tel:112">
+                            <img src="assets/perso/urgences/112.png" alt="appel 112"></a>
+                            <ion-label>Urgences</ion-label>
+                    </ion-col>
+                    <ion-col size="auto">
+                        <a href="tel:101">
+                            <img src="assets/perso/urgences/police.png" alt="appel police" style="background-color: #1e4ba8"></a>
+                            <ion-label style="margin-top: 6px;">Police</ion-label>
+                        </ion-col>
+
+                    <!-- Numéros personnalisés -->
+                    <ion-col size="auto">
+                        <a *ngIf="numUrgence1; else addUrgence1" [href]="'tel:' + numUrgence1">
+                            <img src="/assets/perso/Default_pfp.svg.png" alt="urgence1"></a>
+                            <ion-label style="margin-top: 6px;">{{ nameUrgence1 }}</ion-label>
+                    </ion-col>
+                    <ng-template #addUrgence1>
+                        <img src="assets/perso/urgences/plus.png" alt="plus" (click)="openSettingsPageModal()">
+                        <ion-label style="margin-top: 9px;">Ajouter</ion-label>
+                    </ng-template>
+
+                    <ion-col size="auto">
+                        <a *ngIf="numUrgence2; else addUrgence2" [href]="'tel:' + numUrgence2">
+                            <img src="/assets/perso/Default_pfp.svg.png" alt="urgence2"></a>
+                            <ion-label style="margin-top: 6px;">{{ nameUrgence2 }}</ion-label>
+                    </ion-col>
+                    <ng-template #addUrgence2>
+                        <img src="assets/perso/urgences/plus.png" alt="plus" (click)="openSettingsPageModal()">
+                        <ion-label style="margin-top: 9px;">Ajouter</ion-label>
+                    </ng-template>
+                </ion-row>
+            </ion-grid>
+        </ion-content>
     </ng-template>
-  </ion-modal>
+</ion-modal>
+
   </div>
 </ion-content>
 
@@ -184,7 +200,7 @@ style="margin-top: 10px;">
       </ion-col>
       <ion-col style="font-size: 3em" size="4" text-center>
         <ion-icon name="beer-outline"
-        (click)="setEtatToTwo()"></ion-icon>
+        (click)="ajoutConso()"></ion-icon>
       </ion-col>
       <ion-col style="font-size: 2em" size="4" text-center>
         <ion-icon name="game-controller-outline" 

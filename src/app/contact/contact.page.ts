@@ -3,11 +3,12 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ContactService } from '../services/contact.service';
 import { Share } from '@capacitor/share';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, LoadingController} from '@ionic/angular';
 import { ContactPopoverComponent } from '../contact-popover/contact-popover.component';
 import { Keyboard } from '@capacitor/keyboard';
 import { PluginListenerHandle } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
+import { ProfilService } from '../services/profil.service';
 
 
 
@@ -17,11 +18,12 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['contact.page.scss'],
 })
 export class ContactPage implements OnInit, OnDestroy {
+  monprofil: any;
   favorisContacts?: Observable<any[]>;
   autresContacts?: Observable<any[]>;
   filteredContacts: any[] = [];
   searchTerm: string = '';
-  isSortedByNom: boolean = true; // true si trié par nom, false si trié par lieu/surnom
+  isSortedByNom: boolean = true; // true si trié par nom, false si trié par lieu  
   isKeyboardVisible: boolean = false;
   private keyboardSubscriptions: PluginListenerHandle[] = [];
 
@@ -29,14 +31,40 @@ export class ContactPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private contactService: ContactService,
+    private profilService: ProfilService,
     private popoverController: PopoverController,
+    private loadingController: LoadingController,
   ) {}
+  monProfil: any;
 
   async ngOnInit() {
+    const loading = await this.loadingController.create({
+      message: 'Chargement...',
+      spinner: 'circles'
+    });
+    await loading.present();
+
+    this.loadUserProfile();
+    this.profilService.getMonProfil().subscribe(profil => {
+      this.monprofil = profil;
+    }, error => {
+      console.error('Erreur lors de la récupération du profil:', error);
+      this.loadUserProfile();
+    });
     this.sortContacts();
     this.setupKeyboardListeners();
+    await loading.dismiss();
   }
 
+  loadUserProfile() {
+    this.profilService.getMonProfil().subscribe(data => {
+      this.monProfil = data;
+    }, error => {
+      console.error('Erreur lors de la récupération du profil:', error);
+    });
+  }
+
+  //ecoute si le keybord est activé pour supprimé le footer car bug
   private async setupKeyboardListeners() {
     const showListener = await Keyboard.addListener('keyboardWillShow', () => {
       this.isKeyboardVisible = true;
@@ -95,6 +123,7 @@ export class ContactPage implements OnInit, OnDestroy {
   }
 }
 
+
 filterContacts(event: any) {
   this.searchTerm = event.detail.value.toLowerCase();
 
@@ -129,6 +158,10 @@ filterContacts(event: any) {
   
   openGamificationPage() {
     this.navCtrl.navigateRoot('/gamificationhub', { animated: false });
+  }
+
+  openSettingsPage() {
+    this.navCtrl.navigateRoot('/settings', { animated: false });
   }
 }
 

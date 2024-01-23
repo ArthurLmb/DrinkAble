@@ -1,5 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar [class.toolbar-green]="monprofil?.etat === 0" 
+    [class.toolbar-orange]="monprofil?.etat === 1" 
+    [class.toolbar-red]="monprofil?.etat === 2">
     <ion-icon name="swap-vertical" slot="start" 
       style="font-size: 26px; margin-left: 12px;" (click)="toggleSort()"></ion-icon>
     <ion-label class="label-trier">
@@ -101,7 +103,7 @@
   <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
     <ion-row>
       <ion-col style="font-size: 2em" size="4" text-center>
-        <ion-icon name="settings-outline"></ion-icon>
+        <ion-icon name="settings-outline" (click)="openSettingsPage()"></ion-icon>
       </ion-col>
       <ion-col style="font-size: 3em" size="4" text-center>
         <ion-icon name="home-outline" (click)="goHome()"></ion-icon>

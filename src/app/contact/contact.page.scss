@@ -1,3 +1,16 @@
+//gere la couleur du header en fonction de l'etat
+.toolbar-green{
+  --background: darkgreen;
+  --color: white;
+}
+.toolbar-orange{
+  --background: darkorange;
+  --color: white;
+}
+.toolbar-red{
+  --background: darkred;
+  --color: white;
+}
 
 //Liste contact
 .header-list{
@@ -6,7 +19,6 @@
 }
 .label-trier{
   margin-left: 6px;
-  color: grey;
   font-size: 18px;
   margin-bottom: 0px;
 }
@@ -26,7 +38,7 @@ img {
 .footer {
     ion-toolbar {
       ion-row {
-        height: 100%; // Assurez-vous que la rangée utilise toute la hauteur disponible
+        height: 100%;
   
         ion-col {
           display: flex;

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
 import { AuthService, UserProfile } from '../../services/auth.service'; 
 import { AlertController, LoadingController } from '@ionic/angular';
+import { Camera, CameraDirection, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { ProfilService } from '../../services/profil.service';
 
 
 @Component({
@@ -32,7 +34,7 @@ export class InscriptionPage implements OnInit {
   confirmPassword: string ='';
   showPassword: boolean = false; // Pour gérer la visibilité du mot de passe
   
-  selectedImage: File | null = null;
+  selectedImage: Photo | null = null;
   
   constructor(
     private navCtrl: NavController,
@@ -40,17 +42,25 @@ export class InscriptionPage implements OnInit {
     private authService: AuthService,
     private loadingController: LoadingController,
 		private alertController: AlertController,
+    private profilService: ProfilService,
   ) { }
 
+  async selectImage() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      direction: CameraDirection.Front,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Prompt,
+      promptLabelPhoto:'Choisir depuis la gallerie',
+      promptLabelPicture: 'Prendre une photo',
+    });
 
-  onFileChanged(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedImage = input.files[0];
-    } else {
-      this.selectedImage = null;
+    if (image) {
+      this.selectedImage = image;
     }
   }
+
 
   onCityChange() {
     this.showCustomCityField = this.selectedCity === 'Autre';
@@ -99,6 +109,9 @@ export class InscriptionPage implements OnInit {
       console.log('Inscription réussie');
       await loading.dismiss(); // Ferme le chargement
       this.showAlert("Inscription réussie", "Bienvenue sur Drink'Able !");
+      if (this.selectedImage) {
+        await this.profilService.uploadImage(this.selectedImage);
+      }
       this.router.navigateByUrl('/disclaimer');
       // Redirection ou autres actions après une inscription réussie
     } catch (error) {
@@ -120,7 +133,7 @@ export class InscriptionPage implements OnInit {
   readonly phoneMask: MaskitoOptions = {
     mask: ['+', /\d/, /\d/,' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/,' ', /\d/, /\d/,' ', /\d/, /\d/],
   };
-  // Définition du masque pour le numéro de téléphone
+  // Définition du masque pour la date de naissance
   readonly birthdateMask: MaskitoOptions = {
     mask: [/\d/, /\d/,'/', /\d/, /\d/, '/', /\d/, /\d/,/\d/, /\d/,],
   };

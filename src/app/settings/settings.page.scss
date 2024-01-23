@@ -1,5 +1,19 @@
+.toolbar-green{
+  --background: darkgreen;
+  --color: white;
+}
+.toolbar-orange{
+  --background: darkorange;
+  --color: white;
+}
+.toolbar-red{
+  --background: darkred;
+  --color: white;
+}
 
-
+.toolbar{
+  --background: rgba(160, 158, 158, 0.342);
+}
 
 //Footer
 .footer {

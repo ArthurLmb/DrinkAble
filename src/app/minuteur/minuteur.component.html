@@ -4,9 +4,19 @@
   [color]="getProgressColor(monProfil.etat)">
 </ion-progress-bar></div>
 <div *ngIf="monProfil" class="cercle" [ngStyle]="{'border-color': getBorderColor(monProfil.etat)}">
-  <span *ngIf="monProfil.etat > 0; else greenStatus" class="minuteur">
-    {{ formatTime(tempsRestant) }}</span>
-  <ng-template #greenStatus>
-    <span>vous êtes dans le vert</span>
-  </ng-template>
+  <!-- Conteneur pour le bouton Réinitialiser -->
+  <div class="reinitialiser-container">
+    <ion-button  size="small" color="medium" (click)="reinitialiserMinuteur()" 
+    [disabled]="!monProfil || monProfil.etat <= 0" >Réinitialiser</ion-button>
+  </div>
+
+  <!-- Conteneur pour le compteur ou le message vert -->
+  <div class="compteur-container">
+    <span *ngIf="monProfil.conso > 0; else greenStatus" class="minuteur">
+      {{ formatTime(tempsRestant) }}
+    </span>
+    <ng-template #greenStatus>
+      <span><p style="font-size: 28px;">Vous êtes dans le vert :)</p></span>
+    </ng-template>
+  </div>
 </div>

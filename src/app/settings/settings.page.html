@@ -1,19 +1,118 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>settings</ion-title>
+  <ion-toolbar
+    [class.toolbar-green]="monprofil?.etat === 0" 
+    [class.toolbar-orange]="monprofil?.etat === 1" 
+    [class.toolbar-red]="monprofil?.etat === 2">
+    <ion-title>Paramètres</ion-title>
+    <i style="font-size: 1.7em; margin-left: 20px;" class="bi bi-box-arrow-left" (click)="logout()" slot="start"></i>
+    <i style="font-size: 1.7em; margin-right: 20px;" class="bi bi-exclamation-circle" (click)="goDisclaimer()" slot="end"></i>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="logout()">
-    Déconnexion
-  </ion-button>
-  <ion-button (click)="goDisclaimer()">
-    Disclaimer
-  </ion-button>
+  <ion-toolbar class="toolbar">
+    <ion-title>Modifier vos infos.</ion-title>
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Numéro de téléphone</ion-label>
+          <ion-input [(ngModel)]="newTelephone" name="telephone"
+          placeholder="+32 / _ _ _  _ _  _ _  _ _"
+          [maskito]="phoneMask"
+          [maskitoElement]="maskPredicate"
+          type="tel"
+          inputmode="tel"
+          required
+          [clearInput]="true"
+          errorText="Numéro Invalide"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Poids (kg)</ion-label>
+          <ion-input 
+          type="numeric"
+          inputmode="numeric" [(ngModel)]="newPoids" name="poids" required
+          placeholder="Votre Poids"
+          [clearInput]="true"
+          errorText="Invalide"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Ville</ion-label>
+          <ion-input type="text" [(ngModel)]="newVille" name="ville" required
+          placeholder="Votre Ville"
+          autocapitalize="true"
+          [clearInput]="true"
+          errorText="Invalide"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" color="success" (click)="updateProfile()">Confirmer</ion-button>
+    </ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <ion-toolbar class="toolbar">
+    <ion-title>Contacts d'urgences</ion-title>
+  </ion-toolbar>
+  <ion-grid>
+    <!-- Urgence 1 -->
+  <ion-row>
+    <ion-col size="5">
+      <ion-item>
+        <ion-label position="floating">Nom <i class="bi bi-person-vcard"></i></ion-label>
+        <ion-input type="text" [(ngModel)]="newNomUrgence1"
+        autocapitalize="true"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="7">
+      <ion-item>
+        <ion-label position="floating">Numéro <i class="bi bi-telephone"></i> </ion-label>
+        <ion-input [(ngModel)]="newNumUrgence1"
+        placeholder="+32 / _ _ _  _ _  _ _  _ _"
+          [maskito]="phoneMask"
+          [maskitoElement]="maskPredicate"
+          type="tel"
+          inputmode="tel"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-button color="light" expand="block" (click)="updateUrgence1()">Mettre à jour contact d'urgence 1</ion-button>
+    </ion-col>
+
+  <!-- Urgence 2 -->
+    <ion-col size="5">
+      <ion-item>
+        <ion-label position="floating">Nom <i class="bi bi-person-vcard"></i></ion-label>
+        <ion-input type="text" [(ngModel)]="newNomUrgence2"
+        autocapitalize="true"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="7">
+      <ion-item>
+        <ion-label position="floating">Numéro <i class="bi bi-telephone"></i> </ion-label>
+        <ion-input [(ngModel)]="newNumUrgence2"
+        placeholder="+32 / _ _ _  _ _  _ _  _ _"
+          [maskito]="phoneMask"
+          [maskitoElement]="maskPredicate"
+          type="tel"
+          inputmode="tel"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-button color="light" expand="block" (click)="updateUrgence2()">Mettre à jour contact d'urgence 2</ion-button>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
 </ion-content>
 
-<ion-footer class="footer">
+<ion-footer *ngIf="!isKeyboardVisible" class="footer">
   <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
     <ion-row>
       <ion-col style="font-size: 2em" size="4" text-center>

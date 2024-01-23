@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MaskitoModule } from '@maskito/angular';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,6 +14,7 @@ import { SettingsPage } from './settings.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    MaskitoModule,
     SettingsPageRoutingModule
   ],
   declarations: [SettingsPage]

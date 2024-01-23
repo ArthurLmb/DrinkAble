@@ -19,6 +19,10 @@ export class GamificationhubPage implements OnInit {
     this.navCtrl.navigateRoot('/home', { animated: false });
   }
   
+  openSettingsPage() {
+    this.navCtrl.navigateRoot('/settings', { animated: false });
+  }
+
   openJeuReactivite() {
     this.navCtrl.navigateRoot('/reactivity-game', { animated: false });
   }

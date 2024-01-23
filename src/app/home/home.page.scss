@@ -42,11 +42,13 @@ ion-content{
   flex-direction: column;
   align-items: stretch; /* Pour que les enfants s'étendent sur toute la largeur */
   height: 100%;
+  margin-bottom: 0px;
 }
 
 .location-input {
   max-width: 240px;
   margin-right: 0px;
+  margin-bottom: 0px;
 }
 .location-input ion-input {
   --padding-start: 8px; /* Ajustez le padding intérieur */
@@ -65,7 +67,8 @@ ion-content{
   color: red;
 }
 .confirm-button {
-  margin-top: 10px;
+  margin-top: 0px;
+  margin-bottom: 10px;
   margin-right: 20px;
   align-self: flex-end;
 }

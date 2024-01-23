@@ -1,5 +1,5 @@
 <ion-header style="margin-bottom: 0px;">
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
     <ion-title style="margin-bottom: 0px;">Inscription</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,12 +8,13 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <ion-col size="12" class="ion-text-center">
-        <!-- Icône d'avatar -->
-        <ion-avatar style="height: 120px; width: 120px; margin: 0 auto; margin-bottom: 25px;">
-          <i (click)="goHome()" style="font-size: 120px;" class="bi bi-person-circle"></i>
+        <!-- Affichage conditionnel de l'image ou de l'icône d'avatar -->
+        <ion-avatar (click)="selectImage()" style="height: 120px; width: 120px; margin: 0 auto; margin-top: 10px; margin-bottom: 25px;">
+          <img *ngIf="selectedImage" [src]="'data:image/jpeg;base64,' + selectedImage.base64String" style="height: 100%; width: 100%; object-fit: cover;" />
+          <i *ngIf="!selectedImage" style="font-size: 120px;" class="bi bi-person-circle"></i>
         </ion-avatar>
         <!-- Label pour modifier la photo -->
-        <p style="font-size: 0.90em;">Modifier votre photo de profil</p>
+        <p (click)="selectImage()" style="font-size: 0.90em;">Modifier votre photo de profil</p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -150,8 +151,8 @@
         style="width: 100%; margin-left: 0%; margin-right: 80%; margin-top: 7px; margin-bottom: 7px;"
         (ionChange)="onSexeChange($event)">
           <div slot="label">Sexe</div>
-          <ion-select-option value="h">Homme</ion-select-option>
-          <ion-select-option value="f">Femme</ion-select-option>
+          <ion-select-option value="homme">Homme</ion-select-option>
+          <ion-select-option value="femme">Femme</ion-select-option>
           <ion-select-option value="autre">Autre</ion-select-option>
       </ion-select>
       <ion-label style="color: red; margin-right: 0px; " slot="end">*</ion-label>

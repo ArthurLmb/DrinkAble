@@ -55,7 +55,16 @@ export class AuthService {
           nom: fullName, // Nom complet de l'utilisateur
           etat: 0, // Valeur initiale pour l'état
           localisation: '', // Valeur initiale pour la localisation
-          photoURL: '' // Valeur initiale pour l'URL de la photo
+          photoURL: '', // Valeur initiale pour l'URL de la photo
+          conso: 0,
+          timestamp: 0,
+          tempsRestant: 0,
+          numUrgence1: '',
+          nameUrgence1: '',
+          numUrgence2: '',
+          nameUrgence2: '',
+          bacCumulatif: 0,
+
         });
 
         console.log('Utilisateur enregistré avec succès');

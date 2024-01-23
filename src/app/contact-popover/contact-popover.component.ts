@@ -1,19 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ContactService } from '../services/contact.service'; // Assure-toi que ce chemin est correct
+import { ContactService } from '../services/contact.service'; 
 import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-contact-popover',
   templateUrl: './contact-popover.component.html',
-  styleUrls: ['./contact-popover.component.scss'], // Si tu as un fichier de style
+  styleUrls: ['./contact-popover.component.scss'], 
 })
 export class ContactPopoverComponent {
-  @Input() contact: any; // Remplace 'any' par le type approprié de tes contacts
+  @Input() contact: any; 
 
   constructor(
     private popoverController: PopoverController,
-    private contactService: ContactService, // Si tu as besoin de services pour gérer les contacts
+    private contactService: ContactService, 
     private alertController: AlertController
   ) {}
 
@@ -69,10 +69,9 @@ export class ContactPopoverComponent {
     await alert.present();
   }
   ouvrirAdresseSurCarte(type: string) {
-    let url: string = ''; // Initialisez la variable 'url' avec une chaîne vide
+    let url: string = ''; 
     const adresseEncodee = encodeURI(this.contact.localisation);
   
-    // Définissez 'url' en fonction du type de cartographie choisi
     if (type === 'google') {
       url = `https://www.google.com/maps/search/?api=1&query=${adresseEncodee}`;
     } else if (type === 'apple') {

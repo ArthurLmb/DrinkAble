@@ -5,7 +5,7 @@ swiper-container {
   }
 
 swiper-container img {
-    height: 100%; /* Ceci garantit que les images remplissent la hauteur du swiper */
-    object-fit: contain; /* Ceci garantit que les images conservent leurs proportions tout en couvrant l'espace disponible */
-    width: 100%; /* Ceci permet de s'assurer que la largeur de l'image s'ajuste automatiquement */
+    height: 100%; /* les images remplissent la hauteur du swiper */
+    object-fit: contain; /* les images conservent leurs proportions tout en couvrant l'espace disponible */
+    width: 100%; /* largeur de l'image s'ajuste automatiquement */
   }

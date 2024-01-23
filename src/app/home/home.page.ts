@@ -25,6 +25,10 @@ export class HomePage {
   currentFilter: string = 'all'; // 'all' ou 'favorites'
   newLocalisation: string = '';
   defaultPhoto: string = '';
+  numUrgence1: string = '';
+  nameUrgence1: string = '';
+  numUrgence2: string = '';
+  nameUrgence2: string = '';
 
   constructor(
     private router: Router,
@@ -57,6 +61,10 @@ export class HomePage {
       this.profilService.getMonProfil().subscribe(profil => {
         this.monprofil = profil;
         this.newLocalisation = this.monprofil?.localisation || '';
+        this.numUrgence1 = profil.numUrgence1;
+        this.nameUrgence1 = profil.nameUrgence1;
+        this.numUrgence2 = profil.numUrgence2;
+        this.nameUrgence2 = profil.nameUrgence2;
       });
     }
 
@@ -76,32 +84,17 @@ export class HomePage {
 
 //bouton test ajout conso
 
-async setEtatToTwo() {
+async ajoutConso() {
   if (this.monProfil) {
     try {
-      await this.profilService.updateEtat(2);
-      await this.presentToastForEtatRed();
-      console.log("L'état a été mis à jour à 2");
+      await this.profilService.incrementConso();
+      console.log("Conso ajoutée");
     } catch (error) {
-      console.error("Erreur lors de la mise à jour de l'état à 2", error);
+      console.error('Erreur lors de la mise à jour de "conso"', error);
     }
   } else {
     console.error("Profil non chargé ou non existant");
   }
-}
-
-async presentToastForEtatRed() {
-  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const toastThemeWarningClass = isDarkMode ? 'toast-light-theme-warning' : 'toast-dark-theme-warning';
-
-  const toast = await this.toastController.create({
-    header: 'Attention !',
-    message: 'Vous êtes probablement trop alcoolisé pour prendre la route.',
-    position: 'top',
-    duration: 5000,
-    cssClass: toastThemeWarningClass,
-  });
-  toast.present();
 }
 
 
@@ -109,7 +102,7 @@ async presentToastForEtatRed() {
 
   //header
   openContactPage() {
-    this.router.navigateByUrl('/contact'); // Assurez-vous que cette route est définie dans votre configuration de routage
+    this.router.navigateByUrl('/contact'); 
   }
 
   loadAllContacts() {
@@ -144,7 +137,6 @@ async presentToastForEtatRed() {
       this.showAlert('Succès', 'Localisation mise à jour avec succès');
       this.modalController.dismiss();
     } catch (error) {
-      // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
     }
   }
 
@@ -154,7 +146,6 @@ async presentToastForEtatRed() {
       try {
         await this.profilService.deletePhoto(this.defaultPhoto);
         this.defaultPhoto = '';
-        this.showAlert('Succès', 'Photo supprimée');
       } catch (error) {
         // Gérez les erreurs ici, par exemple, affichez un message d'erreur à l'utilisateur.
       }
@@ -201,6 +192,7 @@ async presentToastForEtatRed() {
 			await loading.present();
 
 			const result = await this.profilService.uploadImage(image);
+      this.showAlert('Succès', 'Image téléchargée avec succès');
 			loading.dismiss();
 
 			if (!result) {
@@ -228,6 +220,7 @@ async presentToastForEtatRed() {
 			await loading.present();
 
 			const result = await this.profilService.uploadImage(image);
+      this.showAlert('Succès', 'Image téléchargée avec succès');
 			loading.dismiss();
 
 			if (!result) {
@@ -257,6 +250,7 @@ async presentToastForEtatRed() {
 			await loading.present();
 
 			const result = await this.profilService.uploadImage(image);
+      this.showAlert('Succès', 'Image téléchargée avec succès');
 			loading.dismiss();
 
 			if (!result) {
@@ -310,5 +304,9 @@ async presentToastForEtatRed() {
   }
   openSettingsPage() {
     this.navCtrl.navigateRoot('/settings', { animated: false });
+  }
+  openSettingsPageModal() {
+    this.navCtrl.navigateRoot('/settings', { animated: false });
+    this.modalController.dismiss();
   }
 }

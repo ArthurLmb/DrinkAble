@@ -15,37 +15,31 @@
   </div>
 
   <div *ngIf="showResults" class="results-container">
-    <div class="messageicongood" *ngIf="score > 5">
-      <ion-icon name="shield-checkmark-outline"></ion-icon>
+    <div [ngClass]="{'messageicongood': score > 9, 'messageiconbad': score <= 9}">
+      <ion-icon [name]="score > 9 ? 'shield-checkmark-outline' : 'warning-outline'"></ion-icon>
     </div>
-    <div class="message" *ngIf="score > 5">
-      Bravo ! Vous êtes probablement en dessous de la limite d'alcoolémie.
-    </div>
-    <div class="messageiconbad" *ngIf="score <= 5">
-      <ion-icon name="warning-outline"></ion-icon>
-    </div>
-    <div class="message" *ngIf="score <= 5">
-      Attention ! Vous êtes probablement au-dessus de la limite.
+    <div class="message">
+      {{ score > 9 ? 'Bravo ! Vous êtes probablement en dessous de la limite d\'alcoolémie.' : 'Attention ! Vous êtes probablement au-dessus de la limite.' }}
     </div>
     <div class="final-score-display neon-text">
       Score final: {{ score }}
     </div>
-  </div>
-  <div *ngIf="showResults" class="results-buttons">
+</div>
+<div *ngIf="showResults" class="results-buttons">
     <ion-button size="large" (click)="restartGame()">
       <ion-icon name="reload-outline"></ion-icon>Rejouer
-        </ion-button>
-      <ion-button size="large" (click)="shareScore()">
-        <ion-icon name="share-outline"></ion-icon>Partager
-      </ion-button>
-  </div>
+    </ion-button>
+    <ion-button size="large" (click)="shareScore()">
+      <ion-icon name="share-outline"></ion-icon>Partager
+    </ion-button>
+</div>
 </ion-content>
 
 <ion-footer class="footer">
   <ion-toolbar style="padding: 0px; padding-bottom: 10px;">
     <ion-row>
       <ion-col style="font-size: 2em" size="4" text-center>
-        <ion-icon name="settings-outline"></ion-icon>
+        <ion-icon name="settings-outline" (click)="openSettingsPage()"></ion-icon>
       </ion-col>
       <ion-col style="font-size: 3em" size="4" text-center>
         <ion-icon name="home-outline" (click)="goHome()"></ion-icon>
